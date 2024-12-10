@@ -10,6 +10,8 @@
 <hr />
 
 <form asp-action="Edit">
+    <!-- Hidden field to track IdAraba -->
+    <input asp-for="IdAraba" type="hidden" />
     <div class="form-group">
         <label asp-for="Marka" class="control-label"></label>
         <input asp-for="Marka" class="form-control" />

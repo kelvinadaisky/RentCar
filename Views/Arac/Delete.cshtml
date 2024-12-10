@@ -39,7 +39,7 @@
     <div>@(Model.Durum)</div>
 </div>
 
-<form asp-action="DeleteConfirmed">
+<form asp-action="Delete">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="IdAraba" />
     <button type="submit" class="btn btn-danger">Delete</button>

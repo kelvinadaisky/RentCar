@@ -18,15 +18,7 @@ namespace RentCar.Controllers
             var aracList = _context.Aracs.ToList();
             return View(aracList);
         }
-        public IActionResult Details(int id)
-        {
-            var arac = _context.Aracs.FirstOrDefault(a => a.IdAraba == id);
-            if (arac == null)
-            {
-                return NotFound();
-            }
-            return View(arac);
-        }
+
         // GET: Arac/Create
         public IActionResult Create()
         {
@@ -57,7 +49,7 @@ namespace RentCar.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([Bind("IdAraba, Marka, Model, Renk, UretimYili, PlakaNumarasi, Durum")] Arac arac)
+        public IActionResult Edit(Arac arac)
         {
             if (ModelState.IsValid)
             {
