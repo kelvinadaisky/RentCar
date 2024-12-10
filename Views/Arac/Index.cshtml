@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RentCar.Models.Arac>
+
+<h2>Arac Listesi</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Marka</th>
+            <th>Model</th>
+            <th>Renk</th>
+            <th>Plaka Numarası</th>
+            <th>Durum</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var arac in Model)
+        {
+            <tr>
+                <td>@arac.Marka</td>
+                <td>@arac.Model</td>
+                <td>@arac.Renk</td>
+                <td>@arac.PlakaNumarasi</td>
+                <td>@arac.Durum</td>
+                <td>
+                    <a href="@Url.Action("Details", "Arac", new { id = arac.IdAraba })">Details</a>
+                    <a href="@Url.Action("Edit", "Arac", new { id = arac.IdAraba })">Edit</a>
+                    <a href="@Url.Action("Delete", "Arac", new { id = arac.IdAraba })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Arac")">Add New Car</a>

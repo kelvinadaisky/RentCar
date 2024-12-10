@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Management</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.10.2/main.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            flex-shrink: 0;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+            .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 5px;
+            }
+
+        .btn {
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+            footer small {
+                color: #f1f1f1;
+            }
+
+        .container {
+            margin-top: 20px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="@Url.Action("")">Car Rental System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link active" href="@Url.Action("Index", "Home")">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Arac")">Cars</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Customers")">Customers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Rentals")">Rentals</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Schedule", "Booking")">Booking</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Payments", "Transaction")">Payments</a></li>
+
+                        <li class="nav-item text-white nav-link">Hello, Name! </li>
+                        <li>
+                            <form asp-action="LogOff" asp-controller="Account" method="post" class="d-inline">
+                                <button type="submit" class="nav-item text-white nav-link btn btn-warning ms-2">Log off</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <partial name="_Notification" />
+        @RenderBody()
+        <!-- Render the Scripts section here -->
+        @RenderSection("Scripts", required: false)
+    </div>
+
+    <footer class="border-top footer text-white bg-primary">
+        <div class="container">
+            <div class="text-center p-3">
+                <small>&copy; 2024 Car Rental System. Designed by Stacy Kelvin Adaisky.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.10.2"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.2.513/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="~/js/notify.min.js"></script>
+    <script src="~/js/script-custom-calendar.js"></script>
+
+</body>
+</html>
