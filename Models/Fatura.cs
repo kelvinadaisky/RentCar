@@ -7,8 +7,6 @@ public partial class Fatura
 {
     public int IdFatura { get; set; }
 
-    public decimal? ToplamTutar { get; set; }
-
     public decimal? OdenenTutar { get; set; }
 
     public DateOnly? DuzenlenmeTarihi { get; set; }

@@ -15,6 +15,8 @@ public partial class Kisi
 
     public string? EPosta { get; set; }
 
+    public string Role { get; set; } = null!;
+
     public virtual Admin? Admin { get; set; }
 
     public virtual Calisan? Calisan { get; set; }

@@ -214,9 +214,6 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.OdenenTutar)
                 .HasPrecision(10, 2)
                 .HasColumnName("Odenen_tutar");
-            entity.Property(e => e.ToplamTutar)
-                .HasPrecision(10, 2)
-                .HasColumnName("Toplam_tutar");
             entity.Property(e => e.VadeTarihi).HasColumnName("Vade_tarihi");
 
             entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Faturas)
@@ -253,6 +250,9 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.EPosta)
                 .HasMaxLength(100)
                 .HasColumnName("E_posta");
+            entity.Property(e => e.Role)
+                .HasMaxLength(30)
+                .IsFixedLength();
             entity.Property(e => e.Soyad).HasMaxLength(50);
             entity.Property(e => e.Telefon).HasMaxLength(15);
         });
@@ -333,6 +333,7 @@ public partial class RentCarContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("ID_musteri");
             entity.Property(e => e.ImzalanmaTarihi).HasColumnName("Imzalanma_tarihi");
+            entity.Property(e => e.ToplamTutar).HasColumnName("Toplam_tutar");
 
             entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Sozlesmes)
                 .HasForeignKey(d => d.IdAraba)

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RentCar.Models.Sozlesme>
+@{
+    ViewData["Title"] = "Manage Contracts";
+}
+
+<h1>Manage Contracts</h1>
+
+<div>
+    <h3>Create a New Contract</h3>
+    <form asp-action="Index" method="post">
+        <div class="form-group">
+            <label for="idMusteri">Customer</label>
+            <select id="idMusteri" name="idMusteri" class="form-control" required>
+                <option value="" disabled selected>Select a customer</option>
+                @foreach (var customer in ViewBag.Customers)
+                {
+                    <option value="@customer.Tc">@customer.Ad @customer.Soyad</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="idAraba">Car</label>
+            <select id="idAraba" name="idAraba" class="form-control" required>
+                <option value="" disabled selected>Select a car</option>
+                @foreach (var car in ViewBag.AvailableCars)
+                {
+                    <option value="@car.IdAraba">@car.Marka @car.Model</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="imzalanmaTarihi">Signing Date</label>
+            <input type="date" id="imzalanmaTarihi" name="imzalanmaTarihi" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="sure">Duration (Days)</label>
+            <input type="number" id="sure" name="sure" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="kosullar">Conditions</label>
+            <textarea id="kosullar" name="kosullar" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Create Contract</button>
+    </form>
+</div>
+
+<hr />
+
+<div>
+    <h3>Existing Contracts</h3>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Car</th>
+                    <th>Signing Date</th>
+                    <th>Duration</th>
+                    <th>Conditions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sozlesme in Model)
+                {
+                    <tr>
+                        <td>
+                            @sozlesme.IdMusteriNavigation?.TcNavigation?.Ad
+                            @sozlesme.IdMusteriNavigation?.TcNavigation?.Soyad
+                        </td>
+@*                         <td>@sozlesme.IdArabaNavigation?.Marka @sozlesme.IdArabaNavigation?.Model</td>
+ *@                     <td>@sozlesme.IdAraba</td>
+                        <td>@sozlesme.ImzalanmaTarihi</td>
+                        <td>@sozlesme.Sure</td>
+                        <td>@sozlesme.Kosullar</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No contracts found.</p>
+    }
+</div>

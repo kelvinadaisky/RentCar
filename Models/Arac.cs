@@ -19,7 +19,7 @@ public partial class Arac
 
     public string? PlakaNumarasi { get; set; }
 
-    public string? Durum { get; set; }
+    public string Durum { get; set; } = null!;
 
     public int? IdAjans { get; set; }
 

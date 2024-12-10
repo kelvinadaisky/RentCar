@@ -17,6 +17,8 @@ public partial class Sozlesme
 
     public int? IdAraba { get; set; }
 
+    public decimal ToplamTutar { get; set; }
+
     public virtual ICollection<Fatura> Faturas { get; } = new List<Fatura>();
 
     public virtual Arac? IdArabaNavigation { get; set; }

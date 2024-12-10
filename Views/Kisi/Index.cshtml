@@ -1,0 +1,43 @@
+﻿@model IEnumerable<RentCar.Models.Kisi>
+
+@{
+    ViewData["Title"] = "All Persons";
+}
+
+<h1>All Persons</h1>
+
+<div>
+    <!-- Filter buttons -->
+    <a href="@Url.Action("Index", "Kisi", new { roleFilter = "Admin" })" class="btn btn-primary">Admin</a>
+    <a href="@Url.Action("Index", "Kisi", new { roleFilter = "Musteri" })" class="btn btn-primary">Customer</a>
+    <a href="@Url.Action("Index", "Kisi", new { roleFilter = "Çalışan" })" class="btn btn-primary">Employee</a>
+    <a href="@Url.Action("Index", "Kisi", new { roleFilter = "" })" class="btn btn-secondary">All</a>
+</div>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>TC Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kisi in Model)
+        {
+            <tr>
+                <td>@kisi.Tc</td>
+                <td>@kisi.Ad</td>
+                <td>@kisi.Soyad</td>
+                <td>@kisi.Telefon</td>
+                <td>@kisi.EPosta</td>
+                <td>@kisi.Role</td>
+            </tr>
+        }
+    </tbody>
+</table>
