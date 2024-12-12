@@ -1,0 +1,95 @@
+﻿@model RentCar.Models.Arac
+
+<h2>Car Details</h2>
+
+<div>
+    <h4>Car Information</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Marka</dt>
+        <dd class="col-sm-10">@Model.Marka</dd>
+
+        <dt class="col-sm-2">Model</dt>
+        <dd class="col-sm-10">@Model.Model</dd>
+
+        <dt class="col-sm-2">Year</dt>
+        <dd class="col-sm-10">@Model.UretimYili</dd>
+
+        <dt class="col-sm-2">Color</dt>
+        <dd class="col-sm-10">@Model.Renk</dd>
+
+        <dt class="col-sm-2">Kilometers</dt>
+        <dd class="col-sm-10">@Model.Kilometre</dd>
+
+        <dt class="col-sm-2">License Plate</dt>
+        <dd class="col-sm-10">@Model.PlakaNumarasi</dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Maintenance (Bakim)</h4>
+    @if (Model.Bakims.Any())
+    {
+        <ul>
+            @foreach (var bakim in Model.Bakims)
+            {
+                <li>@bakim.Aciklama (Date: @bakim.BaslangicTarihi)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No maintenance records found.</p>
+    }
+</div>
+
+<div>
+    <h4>Car Status (Arac Durumu)</h4>
+    @if (Model.AracDurumu != null)
+    {
+        <p>@Model.AracDurumu.Aciklama (Status Date: @Model.AracDurumu.GuncellemeTarihi)</p>
+        <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu.IdDurum" class="btn btn-primary">Edit Status</a>
+    }
+    else
+    {
+        <p>No status available.</p>
+        <a asp-action="Create" asp-controller="AracDurumu" asp-route-id="@Model.IdAraba" class="btn btn-primary">Add Status</a>
+    }
+</div>
+
+
+<div>
+    <h4>Insurance (Sigorta)</h4>
+    @if (Model.Sigorta.Any())
+    {
+        <ul>
+            @foreach (var sigorta in Model.Sigorta)
+            {
+                <li>@sigorta.SigortaTuru from @sigorta.SigortaFirma (Expires: @sigorta.SonTarih)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No insurance records found.</p>
+    }
+</div>
+
+<div>
+    <h4>Contracts (Sozlesme)</h4>
+    @if (Model.Sozlesmes.Any())
+    {
+        <ul>
+            @foreach (var sozlesme in Model.Sozlesmes)
+            {
+                <li>Contract ID: @sozlesme.IdSozlesme (Signed: @sozlesme.ImzalanmaTarihi)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No contracts found.</p>
+    }
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+<a asp-action="Edit" asp-route-id="@Model.IdAraba" class="btn btn-primary">Edit</a>

@@ -86,5 +86,23 @@ namespace RentCar.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Arac/Details/5
+        public IActionResult Details(int id)
+        {
+            var arac = _context.Aracs
+                .Include(a => a.AracDurumu)    // Load related AracDurumu
+                .Include(a => a.Bakims)        // Load related Bakim
+                .Include(a => a.Sigorta)       // Load related Sigorta
+                .Include(a => a.Sozlesmes)     // Load related Sozlesme
+                .FirstOrDefault(a => a.IdAraba == id);
+
+            if (arac == null)
+            {
+                return NotFound();
+            }
+
+            return View(arac);
+        }
+
     }
 }

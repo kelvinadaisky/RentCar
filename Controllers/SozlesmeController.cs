@@ -16,7 +16,10 @@ namespace RentCar.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == true).ToList(); // Assuming 1 means available
+            ViewBag.AvailableCars = _context.Aracs
+               .Include(a => a.AracDurumu)
+               .Where(a => a.AracDurumu != null && a.AracDurumu.Aciklama == "Araç mevcut")
+               .ToList();
             ViewBag.Customers = _context.Musteris.Include(m => m.TcNavigation).ToList();
             var sozlesmes = _context.Sozlesmes
                 .Include(s => s.IdMusteriNavigation) // Load Musteri
@@ -30,7 +33,10 @@ namespace RentCar.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar)
         {
-            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == true).ToList();
+            ViewBag.AvailableCars = _context.Aracs
+              .Include(a => a.AracDurumu) // Change AracDurumus to AracDurumu
+              .Where(a => a.AracDurumu != null && a.AracDurumu.Aciklama == "Araç mevcut")
+              .ToList();
             ViewBag.Customers = _context.Kisis.ToList();
             var sozlesmes = _context.Sozlesmes.ToList();
 

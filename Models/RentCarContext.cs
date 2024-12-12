@@ -101,9 +101,6 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.IdAraba)
                 .HasDefaultValueSql("nextval('\"Araç_ID_araba_seq\"'::regclass)")
                 .HasColumnName("ID_araba");
-            entity.Property(e => e.Durum)
-                .IsRequired()
-                .HasDefaultValueSql("true");
             entity.Property(e => e.IdAjans).HasColumnName("ID_ajans");
             entity.Property(e => e.Marka).HasMaxLength(50);
             entity.Property(e => e.Model).HasMaxLength(50);
@@ -125,15 +122,18 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Arac_Durumu");
 
+            entity.HasIndex(e => e.IdAraba, "unique_id_araba").IsUnique();
+
             entity.Property(e => e.IdDurum)
                 .HasDefaultValueSql("nextval('\"Araç_Durumu_ID_durum_seq\"'::regclass)")
                 .HasColumnName("ID_durum");
             entity.Property(e => e.GuncellemeTarihi).HasColumnName("Guncelleme_tarihi");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
 
-            entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.AracDurumus)
-                .HasForeignKey(d => d.IdAraba)
-                .HasConstraintName("Arac_Durumu_ID_araba_fkey");
+            entity.HasOne(d => d.IdArabaNavigation).WithOne(p => p.AracDurumu)
+                .HasForeignKey<AracDurumu>(d => d.IdAraba)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("link_Arac_AracDurum");
         });
 
         modelBuilder.Entity<Bakim>(entity =>

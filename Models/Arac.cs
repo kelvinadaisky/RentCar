@@ -19,11 +19,9 @@ public partial class Arac
 
     public string? PlakaNumarasi { get; set; }
 
-    public bool? Durum { get; set; }
-
     public int IdAjans { get; set; }
 
-    public virtual ICollection<AracDurumu> AracDurumus { get; } = new List<AracDurumu>();
+    public virtual AracDurumu? AracDurumu { get; set; }
 
     public virtual ICollection<Bakim> Bakims { get; } = new List<Bakim>();
 

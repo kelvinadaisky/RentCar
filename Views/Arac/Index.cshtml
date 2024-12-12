@@ -9,7 +9,6 @@
             <th>Model</th>
             <th>Renk</th>
             <th>Plaka Numarası</th>
-            <th>Durum</th>
             <th></th>
         </tr>
     </thead>
@@ -21,8 +20,8 @@
                 <td>@arac.Model</td>
                 <td>@arac.Renk</td>
                 <td>@arac.PlakaNumarasi</td>
-                <td>@arac.Durum</td>
                 <td>
+                    <a href="@Url.Action("Details", "Arac", new { id = arac.IdAraba })">Details</a>
                     <a href="@Url.Action("Edit", "Arac", new { id = arac.IdAraba })">Edit</a>
                     <a href="@Url.Action("Delete", "Arac", new { id = arac.IdAraba })">Delete</a>
                 </td>

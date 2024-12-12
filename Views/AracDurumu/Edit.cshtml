@@ -1,0 +1,25 @@
+﻿@model RentCar.Models.AracDurumu
+
+<h2>Edit Car Status</h2>
+
+<div>
+    <h4>Car: @Model.IdArabaNavigation?.PlakaNumarasi (License Plate)</h4>
+</div>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="Aciklama">Description</label>
+        <textarea id="Aciklama" name="Aciklama" class="form-control" rows="3">@Model.Aciklama</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="GuncellemeTarihi">Last Updated</label>
+        <input id="GuncellemeTarihi" class="form-control" value="@Model.GuncellemeTarihi?.ToShortDateString()" disabled />
+    </div>
+
+    <input type="hidden" name="IdDurum" value="@Model.IdDurum" />
+    <input type="hidden" name="IdAraba" value="@Model.IdAraba" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Details" asp-controller="Arac" asp-route-id="@Model.IdAraba" class="btn btn-secondary">Cancel</a>
+</form>

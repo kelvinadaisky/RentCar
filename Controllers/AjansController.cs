@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentCar.Models; // Adjust namespace based on your project structure
 using System.Linq;
 
@@ -24,13 +25,17 @@ namespace RentCar.Controllers
         public IActionResult Details(int id)
         {
             var ajan = _context.Ajans
+                .Include(a => a.Aracs)
+                .Include(a => a.Calisans)
                 .FirstOrDefault(a => a.IdAjans == id);
+
             if (ajan == null)
             {
                 return NotFound();
             }
             return View(ajan);
         }
+
 
         // GET: AjansController/Create
         public IActionResult Create()

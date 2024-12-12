@@ -34,11 +34,6 @@
     <div>@Model.PlakaNumarasi</div>
 </div>
 
-<div class="form-group">
-    <label>Durum</label>
-    <div>@(Model.Durum)</div>
-</div>
-
 <form asp-action="Delete">
     <input type="hidden" asp-for="IdAraba" />
     <button type="submit" class="btn btn-danger">Delete</button>
