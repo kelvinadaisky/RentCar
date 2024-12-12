@@ -9,7 +9,7 @@
 <form asp-action="Edit" method="post">
     <div class="form-group">
         <label for="Aciklama">Description</label>
-        <textarea id="Aciklama" name="Aciklama" class="form-control" rows="3">@Model.Aciklama</textarea>
+        <select id="Aciklama" name="Aciklama" class="form-control" asp-items="ViewBag.StatusOptions"></select>
     </div>
 
     <div class="form-group">

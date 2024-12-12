@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentCar.Models;
 using System.Linq;
@@ -25,6 +26,16 @@ namespace RentCar.Controllers
             {
                 return NotFound();
             }
+
+            var options = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Araç mevcut", Value = "Araç mevcut" },
+                new SelectListItem { Text = "Araç kiralanmış", Value = "Araç kiralanmış" },
+                new SelectListItem { Text = "Araç bakımda", Value = "Araç bakımda" }
+            };
+
+            // Set the selected value
+            ViewBag.StatusOptions = new SelectList(options, "Value", "Text", aracDurumu.Aciklama);
 
             return View(aracDurumu);
         }
