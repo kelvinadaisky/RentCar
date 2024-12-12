@@ -1,7 +1,4 @@
 ﻿@model IEnumerable<RentCar.Models.Sozlesme>
-@{
-    ViewData["Title"] = "Manage Contracts";
-}
 
 <h1>Manage Contracts</h1>
 
@@ -14,7 +11,7 @@
                 <option value="" disabled selected>Select a customer</option>
                 @foreach (var customer in ViewBag.Customers)
                 {
-                    <option value="@customer.Tc">@customer.Ad @customer.Soyad</option>
+                    <option value="@customer.Tc">@customer.TcNavigation?.Ad @customer.TcNavigation?.Soyad</option>
                 }
             </select>
         </div>

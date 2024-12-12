@@ -16,8 +16,8 @@ namespace RentCar.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == "Mevcut").ToList(); // Assuming 1 means available
-            ViewBag.Customers = _context.Musteris.ToList(); // Load customers for searching
+            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == true).ToList(); // Assuming 1 means available
+            ViewBag.Customers = _context.Musteris.Include(m => m.TcNavigation).ToList();
             var sozlesmes = _context.Sozlesmes
                 .Include(s => s.IdMusteriNavigation) // Load Musteri
                 .ThenInclude(m => m.TcNavigation) // Load Kisi through Musteri
@@ -30,11 +30,12 @@ namespace RentCar.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(int idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar)
         {
-            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == "1").ToList();
+            ViewBag.AvailableCars = _context.Aracs.Where(a => a.Durum == true).ToList();
             ViewBag.Customers = _context.Kisis.ToList();
             var sozlesmes = _context.Sozlesmes.ToList();
 
-            var musteri = _context.Kisis.FirstOrDefault(k => k.Tc == idMusteri.ToString());
+            var musteri = _context.Musteris.Include(m => m.TcNavigation)
+                .FirstOrDefault(m => m.Tc == idMusteri.ToString());
             if (musteri == null)
             {
                 ModelState.AddModelError("", "Customer not found.");

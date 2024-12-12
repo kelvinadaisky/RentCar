@@ -45,8 +45,8 @@
     <div class="form-group">
         <label asp-for="Durum" class="control-label"></label>
         <select asp-for="Durum" class="form-control">
-            <option value="1">Available</option>
-            <option value="0">Not Available</option>
+            <option value=True>Available</option>
+            <option value=False>Not Available</option>
         </select>
         <span asp-validation-for="Durum" class="text-danger"></span>
     </div>

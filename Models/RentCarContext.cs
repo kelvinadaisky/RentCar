@@ -101,7 +101,9 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.IdAraba)
                 .HasDefaultValueSql("nextval('\"Araç_ID_araba_seq\"'::regclass)")
                 .HasColumnName("ID_araba");
-            entity.Property(e => e.Durum).HasMaxLength(20);
+            entity.Property(e => e.Durum)
+                .IsRequired()
+                .HasDefaultValueSql("true");
             entity.Property(e => e.IdAjans).HasColumnName("ID_ajans");
             entity.Property(e => e.Marka).HasMaxLength(50);
             entity.Property(e => e.Model).HasMaxLength(50);
@@ -113,6 +115,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdAjansNavigation).WithMany(p => p.Aracs)
                 .HasForeignKey(d => d.IdAjans)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Arac_ID_ajans_fkey");
         });
 

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<RentCar.Models.Ajan>
+
+<h2>Agency List</h2>
+<a asp-action="Create" class="btn btn-primary">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ajan in Model)
+        {
+            <tr>
+                <td>@ajan.AjansAdi</td>
+                <td>@ajan.Adres</td>
+                <td>@ajan.Telefon</td>
+                <td>@ajan.EPosta</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ajan.IdAjans" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@ajan.IdAjans" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@ajan.IdAjans" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

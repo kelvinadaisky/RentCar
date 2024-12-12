@@ -1,0 +1,39 @@
+﻿@model RentCar.Models.Ajan
+
+<h2>Edit Agency</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="IdAjans" />
+    <div class="form-group">
+        <label asp-for="AjansAdi"></label>
+        <input asp-for="AjansAdi" class="form-control" />
+        <span asp-validation-for="AjansAdi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Adres"></label>
+        <input asp-for="Adres" class="form-control" />
+        <span asp-validation-for="Adres" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Telefon"></label>
+        <input asp-for="Telefon" class="form-control" />
+        <span asp-validation-for="Telefon" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EPosta"></label>
+        <input asp-for="EPosta" class="form-control" />
+        <span asp-validation-for="EPosta" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AdminTc"></label>
+        <input asp-for="AdminTc" class="form-control" />
+        <span asp-validation-for="AdminTc" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
