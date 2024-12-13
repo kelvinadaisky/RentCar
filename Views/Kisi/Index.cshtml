@@ -1,12 +1,9 @@
 ﻿@model IEnumerable<RentCar.Models.Kisi>
 
-@{
-    ViewData["Title"] = "All Persons";
-}
 
 <h1>All Persons</h1>
 
-<div>
+<div class="mb-3">
     <!-- Filter buttons -->
     <a href="@Url.Action("Index", "Kisi", new { roleFilter = "Admin" })" class="btn btn-primary">Admin</a>
     <a href="@Url.Action("Index", "Kisi", new { roleFilter = "Musteri" })" class="btn btn-primary">Customer</a>
@@ -14,9 +11,11 @@
     <a href="@Url.Action("Index", "Kisi", new { roleFilter = "" })" class="btn btn-secondary">All</a>
 </div>
 
-<hr />
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Kisi")" class="btn btn-success">Add New Person</a>
+</div>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>TC Number</th>
@@ -25,6 +24,7 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +37,11 @@
                 <td>@kisi.Telefon</td>
                 <td>@kisi.EPosta</td>
                 <td>@kisi.Role</td>
+                <td>
+                    <a href="@Url.Action("Details", "Kisi", new { id = kisi.Tc })" class="btn btn-info btn-sm">Details</a>
+                    <a href="@Url.Action("Edit", "Kisi", new { id = kisi.Tc })" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="@Url.Action("Delete", "Kisi", new { id = kisi.Tc })" class="btn btn-danger btn-sm">Delete</a>
+                </td>
             </tr>
         }
     </tbody>

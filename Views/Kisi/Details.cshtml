@@ -1,0 +1,52 @@
+﻿@model RentCar.Models.Kisi
+
+<h1>Person Details</h1>
+
+<table class="table">
+    <tr>
+        <th>TC Number</th>
+        <td>@Model.Tc</td>
+    </tr>
+    <tr>
+        <th>First Name</th>
+        <td>@Model.Ad</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>@Model.Soyad</td>
+    </tr>
+    <tr>
+        <th>Phone</th>
+        <td>@Model.Telefon</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.EPosta</td>
+    </tr>
+    <tr>
+        <th>Role</th>
+        <td>@Model.Role</td>
+    </tr>
+
+    @if (Model.Musteri != null && Model.Musteri.Ehliyet != null)
+    {
+        <tr>
+            <th>Driver's License Number</th>
+            <td>@Model.Musteri.Ehliyet.EhliyetNo</td>
+        </tr>
+        <tr>
+            <th>License Issue Date</th>
+            <td>@Model.Musteri.Ehliyet.EhliyetTarihi?.ToString("yyyy-MM-dd")</td>
+        </tr>
+        <tr>
+            <th>License Expiration Date</th>
+            <td>@Model.Musteri.Ehliyet.SonGecerlilikTarihi?.ToString("yyyy-MM-dd")</td>
+        </tr>
+        <tr>
+            <th>License Category</th>
+            <td>@Model.Musteri.Ehliyet.Kategori</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

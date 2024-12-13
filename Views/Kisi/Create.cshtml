@@ -1,0 +1,40 @@
+﻿@model RentCar.Models.Kisi
+
+@{
+    ViewData["Title"] = "Create New Person";
+}
+
+<h1>Create New Person</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Tc">TC Number</label>
+        <input type="text" class="form-control" id="Tc" name="Tc" required />
+    </div>
+    <div class="form-group">
+        <label for="Ad">First Name</label>
+        <input type="text" class="form-control" id="Ad" name="Ad" />
+    </div>
+    <div class="form-group">
+        <label for="Soyad">Last Name</label>
+        <input type="text" class="form-control" id="Soyad" name="Soyad" />
+    </div>
+    <div class="form-group">
+        <label for="Telefon">Phone</label>
+        <input type="text" class="form-control" id="Telefon" name="Telefon" />
+    </div>
+    <div class="form-group">
+        <label for="EPosta">Email</label>
+        <input type="email" class="form-control" id="EPosta" name="EPosta" />
+    </div>
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select class="form-control" id="Role" name="Role" required>
+            <option value="Admin">Admin</option>
+            <option value="Musteri">Customer</option>
+            <option value="Çalışan">Employee</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -1,0 +1,33 @@
+﻿@model RentCar.Models.Kisi
+
+@{
+    ViewData["Title"] = "Edit Person";
+}
+
+<h1>Edit Person</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Tc" />
+    <div class="form-group">
+        <label for="Ad">First Name</label>
+        <input type="text" class="form-control" id="Ad" asp-for="Ad" />
+    </div>
+    <div class="form-group">
+        <label for="Soyad">Last Name</label>
+        <input type="text" class="form-control" id="Soyad" asp-for="Soyad" />
+    </div>
+    <div class="form-group">
+        <label for="Telefon">Phone</label>
+        <input type="text" class="form-control" id="Telefon" asp-for="Telefon" />
+    </div>
+    <div class="form-group">
+        <label for="EPosta">Email</label>
+        <input type="email" class="form-control" id="EPosta" asp-for="EPosta" />
+    </div>
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select class="form-control" id="Role" asp-for="Role" asp-items="ViewBag.RoleOptions"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

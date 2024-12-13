@@ -9,7 +9,7 @@ public partial class Musteri
 
     public DateOnly? DogumTarihi { get; set; }
 
-    public virtual ICollection<Ehliyet> Ehliyets { get; } = new List<Ehliyet>();
+    public virtual Ehliyet? Ehliyet { get; set; }
 
     public virtual ICollection<Sozlesme> Sozlesmes { get; } = new List<Sozlesme>();
 

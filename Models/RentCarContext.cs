@@ -182,6 +182,8 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Ehliyet");
 
+            entity.HasIndex(e => e.MusteriTc, "Ehliyet_Musteri_TC_key").IsUnique();
+
             entity.Property(e => e.IdEhliyet).HasColumnName("ID_ehliyet");
             entity.Property(e => e.EhliyetNo)
                 .HasMaxLength(20)
@@ -194,8 +196,8 @@ public partial class RentCarContext : DbContext
                 .HasColumnName("Musteri_TC");
             entity.Property(e => e.SonGecerlilikTarihi).HasColumnName("Son_gecerlilik_tarihi");
 
-            entity.HasOne(d => d.MusteriTcNavigation).WithMany(p => p.Ehliyets)
-                .HasForeignKey(d => d.MusteriTc)
+            entity.HasOne(d => d.MusteriTcNavigation).WithOne(p => p.Ehliyet)
+                .HasForeignKey<Ehliyet>(d => d.MusteriTc)
                 .HasConstraintName("link_Musteri_Ehliyet");
         });
 
