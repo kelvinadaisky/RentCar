@@ -74,10 +74,6 @@ public partial class RentCarContext : DbContext
             entity.HasKey(e => e.IdAjans).HasName("Ajans_pkey");
 
             entity.Property(e => e.IdAjans).HasColumnName("ID_ajans");
-            entity.Property(e => e.AdminTc)
-                .HasMaxLength(11)
-                .IsFixedLength()
-                .HasColumnName("Admin_TC");
             entity.Property(e => e.Adres).HasMaxLength(255);
             entity.Property(e => e.AjansAdi)
                 .HasMaxLength(100)
@@ -86,10 +82,6 @@ public partial class RentCarContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("E_posta");
             entity.Property(e => e.Telefon).HasMaxLength(15);
-
-            entity.HasOne(d => d.AdminTcNavigation).WithMany(p => p.Ajans)
-                .HasForeignKey(d => d.AdminTc)
-                .HasConstraintName("Ajans_Admin_TC_fkey");
         });
 
         modelBuilder.Entity<Arac>(entity =>
@@ -174,6 +166,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdAjansNavigation).WithMany(p => p.Calisans)
                 .HasForeignKey(d => d.IdAjans)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Calisan_ID_ajans_fkey");
 
             entity.HasOne(d => d.TcNavigation).WithOne(p => p.Calisan)

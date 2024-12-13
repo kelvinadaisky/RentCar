@@ -11,9 +11,9 @@ public partial class Calisan
 
     public string? Pozisyon { get; set; }
 
-    public int? IdAjans { get; set; }
+    public int IdAjans { get; set; }
 
-    public virtual Ajan? IdAjansNavigation { get; set; }
+    public virtual Ajan IdAjansNavigation { get; set; } = null!;
 
     public virtual Kisi TcNavigation { get; set; } = null!;
 }

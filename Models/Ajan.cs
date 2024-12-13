@@ -15,10 +15,6 @@ public partial class Ajan
 
     public string? EPosta { get; set; }
 
-    public string? AdminTc { get; set; }
-
-    public virtual Admin? AdminTcNavigation { get; set; }
-
     public virtual ICollection<Arac> Aracs { get; } = new List<Arac>();
 
     public virtual ICollection<Calisan> Calisans { get; } = new List<Calisan>();

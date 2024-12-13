@@ -9,7 +9,5 @@ public partial class Admin
 
     public string? Sifre { get; set; }
 
-    public virtual ICollection<Ajan> Ajans { get; } = new List<Ajan>();
-
     public virtual Kisi TcNavigation { get; set; } = null!;
 }
