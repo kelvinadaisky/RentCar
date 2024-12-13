@@ -1,0 +1,40 @@
+﻿@model RentCar.Models.Bakim
+
+<h2>Edit Maintenance Details</h2>
+
+<div>
+    <h4>Car: @Model.IdArabaNavigation?.PlakaNumarasi (License Plate)</h4>
+</div>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="BakimTuru">Maintenance Type</label>
+        <input type="text" id="BakimTuru" name="BakimTuru" class="form-control" value="@Model.BakimTuru" />
+    </div>
+
+    <div class="form-group">
+        <label for="Aciklama">Description</label>
+        <textarea id="Aciklama" name="Aciklama" class="form-control">@Model.Aciklama</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="BaslangicTarihi">Start Date</label>
+        <input type="date" id="BaslangicTarihi" name="BaslangicTarihi" class="form-control" value="@Model.BaslangicTarihi?.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group">
+        <label for="BitisTarihi">End Date</label>
+        <input type="date" id="BitisTarihi" name="BitisTarihi" class="form-control" value="@Model.BitisTarihi?.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group">
+        <label for="Maliyet">Cost</label>
+        <input type="number" step="0.01" id="Maliyet" name="Maliyet" class="form-control" value="@Model.Maliyet" />
+    </div>
+
+    <input type="hidden" name="IdBakim" value="@Model.IdBakim" />
+    <input type="hidden" name="IdAraba" value="@Model.IdAraba" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Details" asp-controller="Arac" asp-route-id="@Model.IdAraba" class="btn btn-secondary">Cancel</a>
+</form>

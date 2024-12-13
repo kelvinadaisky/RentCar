@@ -33,6 +33,8 @@
             @foreach (var bakim in Model.Bakims)
             {
                 <li>@bakim.Aciklama (Date: @bakim.BaslangicTarihi)</li>
+                <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@bakim.IdBakim" class="btn btn-sm btn-primary">Edit @bakim.BakimTuru</a>
+
             }
         </ul>
     }
