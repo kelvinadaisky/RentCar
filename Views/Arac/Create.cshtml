@@ -1,9 +1,5 @@
 ﻿@model RentCar.Models.Arac
 
-@{
-    ViewData["Title"] = "Create New Car";
-}
-
 <h1>Create New Car</h1>
 
 <h4>Arac</h4>
@@ -40,6 +36,14 @@
         <label asp-for="PlakaNumarasi" class="control-label"></label>
         <input asp-for="PlakaNumarasi" class="form-control" />
         <span asp-validation-for="PlakaNumarasi" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label for="IdAjans">Agency</label>
+        <select asp-for="IdAjans" class="form-control" asp-items="@(ViewData["AjansList"] as List<SelectListItem>)">
+            <option value="">Select Agency</option>
+        </select>
+        <span asp-validation-for="IdAjans" class="text-danger"></span>
     </div>
 
     <div class="form-group">

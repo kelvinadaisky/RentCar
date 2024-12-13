@@ -104,7 +104,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdAjansNavigation).WithMany(p => p.Aracs)
                 .HasForeignKey(d => d.IdAjans)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Arac_ID_ajans_fkey");
         });
 
@@ -147,6 +147,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Bakims)
                 .HasForeignKey(d => d.IdAraba)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Bakim_ID_araba_fkey");
         });
 
@@ -214,6 +215,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Faturas)
                 .HasForeignKey(d => d.IdSozlesme)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Fatura_ID_sozlesme_fkey");
         });
 
@@ -229,6 +231,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdTeslimatNavigation).WithMany(p => p.HasarDurumus)
                 .HasForeignKey(d => d.IdTeslimat)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Hasar_Durumu_ID_teslimat_fkey");
         });
 
@@ -292,6 +295,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdFaturaNavigation).WithMany(p => p.Odemes)
                 .HasForeignKey(d => d.IdFatura)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Odeme_ID_fatura_fkey");
         });
 
@@ -313,7 +317,6 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdArabaNavigation).WithOne(p => p.Sigortum)
                 .HasForeignKey<Sigortum>(d => d.IdAraba)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Sigorta_ID_araba_fkey");
         });
 
@@ -336,10 +339,12 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Sozlesmes)
                 .HasForeignKey(d => d.IdAraba)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Sozlesme_ID_araba_fkey");
 
             entity.HasOne(d => d.IdMusteriNavigation).WithMany(p => p.Sozlesmes)
                 .HasForeignKey(d => d.IdMusteri)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Sozlesme_ID_musteri_fkey");
 
             entity.HasMany(d => d.IdArabas).WithMany(p => p.IdSozlesmes)
@@ -347,11 +352,9 @@ public partial class RentCarContext : DbContext
                     "AracSozlesme",
                     r => r.HasOne<Arac>().WithMany()
                         .HasForeignKey("IdAraba")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("Arac_Sozlesme_ID_araba_fkey"),
                     l => l.HasOne<Sozlesme>().WithMany()
                         .HasForeignKey("IdSozlesme")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("Arac_Sozlesme_ID_sozlesme_fkey"),
                     j =>
                     {
@@ -377,6 +380,7 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Teslimats)
                 .HasForeignKey(d => d.IdSozlesme)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Teslimat_ID_sozlesme_fkey");
         });
 

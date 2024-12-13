@@ -25,6 +25,12 @@
     </dl>
 </div>
 
+<div class="form-group">
+    <label>Ajans</label>
+    <div>@(Model.IdAjansNavigation?.AjansAdi ?? "N/A")</div>
+</div>
+
+
 <div>
     <h4>Maintenance (Bakim)</h4>
     @if (Model.Bakims.Any())
@@ -34,7 +40,6 @@
             {
                 <li>@bakim.Aciklama (Date: @bakim.BaslangicTarihi)</li>
                 <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@bakim.IdBakim" class="btn btn-sm btn-primary">Edit @bakim.BakimTuru</a>
-
             }
         </ul>
     }
@@ -64,7 +69,7 @@
     @if (Model.Sigortum != null)
     {
         <p>@Model.Sigortum.SigortaTuru from @Model.Sigortum.SigortaFirma (Expires: @Model.Sigortum.SonTarih)</p>
-        <a asp-action="Edit" asp-controller="Sigorta" asp-route-id="@Model.Sigortum?.IdSigorta" class="btn btn-primary">Edit Insurance</a>
+        <a asp-action="Edit" asp-controller="Sigorta" asp-route-id="@Model.Sigortum.IdSigorta" class="btn btn-primary">Edit Insurance</a>
     }
     else
     {
@@ -91,3 +96,4 @@
 
 <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 <a asp-action="Edit" asp-route-id="@Model.IdAraba" class="btn btn-primary">Edit</a>
+

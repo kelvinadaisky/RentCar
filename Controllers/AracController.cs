@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentCar.Models;
 
@@ -22,12 +23,20 @@ namespace RentCar.Controllers
         // GET: Arac/Create
         public IActionResult Create()
         {
-            return View();
+            ViewData["AjansList"] = _context.Ajans.Select(d => new SelectListItem
+            {
+                Value = d.IdAjans.ToString(),  // Assuming IdAjans is the ID property
+                Text = d.AjansAdi               // Assuming AjansAdi is the name property
+            }).ToList();
+
+            var arac = new Arac();
+
+            return View(arac);
         }
 
         // POST: Arac/Create
         [HttpPost]
-        public IActionResult Create([Bind("IdAraba, Marka, Model, Renk, UretimYili, PlakaNumarasi, Durum")] Arac arac)
+        public IActionResult Create(Arac arac)
         {
             if (ModelState.IsValid)
             {
@@ -35,6 +44,11 @@ namespace RentCar.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AjansList"] = _context.Ajans.Select(d => new SelectListItem
+            {
+                Value = d.IdAjans.ToString(),  // Assuming IdAjans is the ID property
+                Text = d.AjansAdi               // Assuming AjansAdi is the name property
+            }).ToList();
             return View(arac);
         }
 
@@ -45,6 +59,7 @@ namespace RentCar.Controllers
             {
                 return NotFound();
             }
+            ViewData["AjansList"] = new SelectList(_context.Ajans, "IdAjans", "AjansAdi", arac.IdAjans);
             return View(arac);
         }
 
@@ -53,13 +68,13 @@ namespace RentCar.Controllers
         {
             if (ModelState.IsValid)
             {
-
                     _context.Update(arac);
                     _context.SaveChanges();
 
                 TempData["success"] = "Car updated successfully";
                 return RedirectToAction("Index");
             }
+            ViewData["AjansList"] = new SelectList(_context.Ajans, "IdAjans", "AjansAdi", arac.IdAjans);
             return View(arac);
         }
         public IActionResult Delete(int id)
@@ -94,6 +109,7 @@ namespace RentCar.Controllers
                 .Include(a => a.Bakims)        // Load related Bakim
                 .Include(a => a.Sigortum)       // Load related Sigorta
                 .Include(a => a.Sozlesmes)     // Load related Sozlesme
+                .Include(a => a.IdAjansNavigation)
                 .FirstOrDefault(a => a.IdAraba == id);
 
             if (arac == null)

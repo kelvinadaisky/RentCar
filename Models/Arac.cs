@@ -19,13 +19,13 @@ public partial class Arac
 
     public string? PlakaNumarasi { get; set; }
 
-    public int IdAjans { get; set; }
+    public int? IdAjans { get; set; }
 
     public virtual AracDurumu? AracDurumu { get; set; }
 
     public virtual ICollection<Bakim> Bakims { get; } = new List<Bakim>();
 
-    public virtual Ajan IdAjansNavigation { get; set; } = null!;
+    public virtual Ajan? IdAjansNavigation { get; set; }
 
     public virtual Sigortum? Sigortum { get; set; }
 
