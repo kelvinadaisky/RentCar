@@ -306,6 +306,8 @@ public partial class RentCarContext : DbContext
         {
             entity.HasKey(e => e.IdSigorta).HasName("Sigorta_pkey");
 
+            entity.HasIndex(e => e.IdAraba, "Sigorta_ID_araba_key").IsUnique();
+
             entity.Property(e => e.IdSigorta).HasColumnName("ID_sigorta");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
             entity.Property(e => e.SigortaFirma)
@@ -316,8 +318,9 @@ public partial class RentCarContext : DbContext
                 .HasColumnName("Sigorta_turu");
             entity.Property(e => e.SonTarih).HasColumnName("Son_tarih");
 
-            entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Sigorta)
-                .HasForeignKey(d => d.IdAraba)
+            entity.HasOne(d => d.IdArabaNavigation).WithOne(p => p.Sigortum)
+                .HasForeignKey<Sigortum>(d => d.IdAraba)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Sigorta_ID_araba_fkey");
         });
 

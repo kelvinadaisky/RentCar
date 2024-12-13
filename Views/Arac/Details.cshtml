@@ -59,14 +59,10 @@
 
 <div>
     <h4>Insurance (Sigorta)</h4>
-    @if (Model.Sigorta.Any())
+    @if (Model.Sigortum != null)
     {
-        <ul>
-            @foreach (var sigorta in Model.Sigorta)
-            {
-                <li>@sigorta.SigortaTuru from @sigorta.SigortaFirma (Expires: @sigorta.SonTarih)</li>
-            }
-        </ul>
+        <p>@Model.Sigortum.SigortaTuru from @Model.Sigortum.SigortaFirma (Expires: @Model.Sigortum.SonTarih)</p>
+        <a asp-action="Edit" asp-controller="Sigorta" asp-route-id="@Model.Sigortum?.IdSigorta" class="btn btn-primary">Edit Insurance</a>
     }
     else
     {

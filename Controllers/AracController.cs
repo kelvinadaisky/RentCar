@@ -92,7 +92,7 @@ namespace RentCar.Controllers
             var arac = _context.Aracs
                 .Include(a => a.AracDurumu)    // Load related AracDurumu
                 .Include(a => a.Bakims)        // Load related Bakim
-                .Include(a => a.Sigorta)       // Load related Sigorta
+                .Include(a => a.Sigortum)       // Load related Sigorta
                 .Include(a => a.Sozlesmes)     // Load related Sozlesme
                 .FirstOrDefault(a => a.IdAraba == id);
 

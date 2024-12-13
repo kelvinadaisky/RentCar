@@ -27,7 +27,7 @@ public partial class Arac
 
     public virtual Ajan IdAjansNavigation { get; set; } = null!;
 
-    public virtual ICollection<Sigortum> Sigorta { get; } = new List<Sigortum>();
+    public virtual Sigortum? Sigortum { get; set; }
 
     public virtual ICollection<Sozlesme> Sozlesmes { get; } = new List<Sozlesme>();
 

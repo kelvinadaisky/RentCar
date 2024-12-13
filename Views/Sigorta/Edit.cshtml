@@ -1,0 +1,30 @@
+﻿@model RentCar.Models.Sigortum
+
+<h2>Edit Insurance Details</h2>
+
+<div>
+    <h4>Car: @Model.IdArabaNavigation?.PlakaNumarasi (License Plate)</h4>
+</div>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="SigortaTuru">Insurance Type</label>
+        <input type="text" id="SigortaTuru" name="SigortaTuru" class="form-control" value="@Model.SigortaTuru" />
+    </div>
+
+    <div class="form-group">
+        <label for="SigortaFirma">Insurance Company</label>
+        <input type="text" id="SigortaFirma" name="SigortaFirma" class="form-control" value="@Model.SigortaFirma" />
+    </div>
+
+    <div class="form-group">
+        <label for="SonTarih">Expiration Date</label>
+        <input type="date" id="SonTarih" name="SonTarih" class="form-control" value="@Model.SonTarih?.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <input type="hidden" name="IdSigorta" value="@Model.IdSigorta" />
+    <input type="hidden" name="IdAraba" value="@Model.IdAraba" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Details" asp-controller="Arac" asp-route-id="@Model.IdAraba" class="btn btn-secondary">Cancel</a>
+</form>
