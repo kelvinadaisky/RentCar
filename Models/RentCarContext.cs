@@ -119,6 +119,7 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.IdDurum)
                 .HasDefaultValueSql("nextval('\"Araç_Durumu_ID_durum_seq\"'::regclass)")
                 .HasColumnName("ID_durum");
+            entity.Property(e => e.Aciklama).HasDefaultValueSql("'Araç mevcut'::text");
             entity.Property(e => e.GuncellemeTarihi).HasColumnName("Guncelleme_tarihi");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
 

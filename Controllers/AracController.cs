@@ -42,6 +42,14 @@ namespace RentCar.Controllers
             {
                 _context.Add(arac);
                 _context.SaveChanges();
+                // Create an associated AracDurum for the new car
+                var aracDurum = new AracDurumu
+                {
+                    IdAraba = arac.IdAraba,  // Assuming AracDurum has a foreign key IdAraba
+                };
+
+                _context.AracDurumus.Add(aracDurum);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AjansList"] = _context.Ajans.Select(d => new SelectListItem

@@ -59,7 +59,7 @@
     else
     {
         <p>No status available.</p>
-        <a asp-action="Create" asp-controller="AracDurumu" asp-route-id="@Model.IdAraba" class="btn btn-primary">Add Status</a>
+        <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu?.IdDurum" class="btn btn-primary">Add Status</a>
     }
 </div>
 

@@ -31,17 +31,18 @@ namespace RentCar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(int idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar)
+        public IActionResult Index(string idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar)
         {
             ViewBag.AvailableCars = _context.Aracs
               .Include(a => a.AracDurumu) // Change AracDurumus to AracDurumu
               .Where(a => a.AracDurumu != null && a.AracDurumu.Aciklama == "Araç mevcut")
               .ToList();
-            ViewBag.Customers = _context.Kisis.ToList();
+            ViewBag.Customers = _context.Musteris.Include(m => m.TcNavigation).ToList();
             var sozlesmes = _context.Sozlesmes.ToList();
 
             var musteri = _context.Musteris.Include(m => m.TcNavigation)
-                .FirstOrDefault(m => m.Tc == idMusteri.ToString());
+                .FirstOrDefault(m => m.Tc == idMusteri);
+
             if (musteri == null)
             {
                 ModelState.AddModelError("", "Customer not found.");
