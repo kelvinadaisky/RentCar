@@ -47,6 +47,21 @@
             <td>@Model.Musteri.Ehliyet.Kategori</td>
         </tr>
     }
+    @if (Model.Calisan != null)
+    {
+        <tr>
+            <th>Salary</th>
+            <td>@Model.Calisan.Maas?.ToString("C")</td>
+        </tr>
+        <tr>
+            <th>Position</th>
+            <td>@Model.Calisan.Pozisyon</td>
+        </tr>
+        <tr>
+            <th>Agency</th>
+            <td>@Model.Calisan.IdAjansNavigation?.AjansAdi</td>
+        </tr>
+    }
 </table>
 
 <a asp-action="Index" class="btn btn-secondary">Back to List</a>

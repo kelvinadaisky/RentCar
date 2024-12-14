@@ -40,6 +40,8 @@ namespace RentCar.Controllers
             var kisi = await _context.Kisis
                .Include(k => k.Musteri)
                .ThenInclude(m => m.Ehliyet)
+               .Include(k => k.Calisan)
+               .ThenInclude(c => c.IdAjansNavigation)
                .FirstOrDefaultAsync(m => m.Tc == id);
             if (kisi == null)
             {
