@@ -1,87 +1,142 @@
 ﻿@model IEnumerable<RentCar.Models.Sozlesme>
+@{
+    ViewBag.Title = "Sozlesme Index";
+}
 
-<h1>Manage Contracts</h1>
+<h2>Sözleşme Yönetimi</h2>
 
-<div>
-    <h3>Create a New Contract</h3>
-    <form asp-action="Index" method="post">
-        <div class="form-group">
-            <label for="idMusteri">Customer</label>
-            <select id="idMusteri" name="idMusteri" class="form-control" required>
-                <option value="" disabled selected>Select a customer</option>
-                @foreach (var customer in ViewBag.Customers)
-                {
-                    <option value="@customer.Tc">@customer.TcNavigation?.Ad @customer.TcNavigation?.Soyad</option>
-                }
-            </select>
-        </div>
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">@TempData["success"]</div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
 
-        <div class="form-group">
-            <label for="idAraba">Car</label>
-            <select id="idAraba" name="idAraba" class="form-control" required>
-                <option value="" disabled selected>Select a car</option>
-                @foreach (var car in ViewBag.AvailableCars)
-                {
-                    <option value="@car.IdAraba">@car.Marka @car.Model</option>
-                }
-            </select>
-        </div>
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label for="idMusteri">Müşteri</label>
+        <select id="idMusteri" name="idMusteri" class="form-control" required>
+            <option value="" disabled selected>Bir müşteri seçin</option>
+            @foreach (var customer in ViewBag.Customers)
+            {
+                <option value="@customer.Tc">@customer.TcNavigation?.Ad @customer.TcNavigation?.Soyad</option>
+            }
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label for="imzalanmaTarihi">Signing Date</label>
-            <input type="date" id="imzalanmaTarihi" name="imzalanmaTarihi" class="form-control" required />
-        </div>
+    <div class="form-group">
+        <label for="idAraba">Araç</label>
+        <select id="idAraba" name="idAraba" class="form-control" required>
+            <option value="" disabled selected>Bir araç seçin</option>
+            @foreach (var car in ViewBag.AvailableCars)
+            {
+                <option value="@car.IdAraba">@car.Marka @car.Model (@car.PlakaNumarasi)</option>
+            }
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label for="sure">Duration (Days)</label>
-            <input type="number" id="sure" name="sure" class="form-control" required />
-        </div>
+    <div class="form-group">
+        <label for="cikisTarihi">Çıkış Tarihi</label>
+        <input type="date" id="cikisTarihi" name="cikisTarihi" class="form-control" required />
+    </div>
 
-        <div class="form-group">
-            <label for="kosullar">Conditions</label>
-            <textarea id="kosullar" name="kosullar" class="form-control"></textarea>
-        </div>
+    <div class="form-group">
+        <label for="donusTarihi">Dönüş Tarihi</label>
+        <input type="date" id="donusTarihi" name="donusTarihi" class="form-control" required onchange="calculateTotal()" />
+    </div>
 
-        <button type="submit" class="btn btn-success">Create Contract</button>
-    </form>
-</div>
+    <div class="form-group">
+        <label for="kiraSekli">Kira Şekli</label>
+        <select id="kiraSekli" name="kiraSekli" class="form-control" required onchange="calculateTotal()">
+            <option value="" disabled selected>Kira şekli seçin</option>
+            <option value="Günlük">Günlük</option>
+            <option value="Haftalık">Haftalık</option>
+            <option value="Aylık">Aylık</option>
+        </select>
+    </div>
 
-<hr />
+    <div class="form-group">
+        <label for="toplamTutar">Toplam Tutar</label>
+        <input type="text" id="toplamTutar" name="toplamTutar" class="form-control" readonly />
+    </div>
 
-<div>
-    <h3>Existing Contracts</h3>
-    @if (Model.Any())
-    {
-        <table class="table">
-            <thead>
+    <button type="submit" class="btn btn-success">Sözleşme Oluştur</button>
+    <button type="button" class="btn btn-primary" onclick="calculateTotal()">Hesapla</button>
+</form>
+
+<h3>Mevcut Sözleşmeler</h3>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Müşteri</th>
+                <th>Araç</th>
+                <th>Çıkış Tarihi</th>
+                <th>Dönüş Tarihi</th>
+                <th>Kira Şekli</th>
+                <th>Toplam Tutar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sozlesme in Model)
+            {
                 <tr>
-                    <th>Customer</th>
-                    <th>Car</th>
-                    <th>Signing Date</th>
-                    <th>Duration</th>
-                    <th>Conditions</th>
+                    <td>
+                        @sozlesme.IdMusteriNavigation?.TcNavigation?.Ad
+                        @sozlesme.IdMusteriNavigation?.TcNavigation?.Soyad
+                    </td>
+                    <td>@sozlesme.IdAraba</td>
+                    <td>@sozlesme.CikisTarihi</td>
+                    <td>@sozlesme.DonusTarihi</td>
+                    <td>@sozlesme.KiraSekli</td>
+                    <td>@string.Format("{0:C}", sozlesme.ToplamTutar)</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var sozlesme in Model)
-                {
-                    <tr>
-                        <td>
-                            @sozlesme.IdMusteriNavigation?.TcNavigation?.Ad
-                            @sozlesme.IdMusteriNavigation?.TcNavigation?.Soyad
-                        </td>
-@*                         <td>@sozlesme.IdArabaNavigation?.Marka @sozlesme.IdArabaNavigation?.Model</td>
- *@                     <td>@sozlesme.IdAraba</td>
-                        <td>@sozlesme.ImzalanmaTarihi</td>
-                        <td>@sozlesme.Sure</td>
-                        <td>@sozlesme.Kosullar</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <tr>
+        <td colspan="7" class="text-center">Mevcut bir sözleşme yok.</td>
+    </tr>
+}
+
+
+
+<script>
+    function calculateTotal() {
+        const cikisTarihi = new Date(document.getElementById('cikisTarihi').value);
+        const donusTarihi = new Date(document.getElementById('donusTarihi').value);
+        const kiraSekli = document.getElementById('kiraSekli').value;
+
+        if (!cikisTarihi || !donusTarihi || !kiraSekli) {
+            return;
+        }
+
+        const totalDays = (donusTarihi - cikisTarihi) / (1000 * 60 * 60 * 24);
+
+        let costPerDay = 0;
+        switch (kiraSekli) {
+            case "Günlük":
+                costPerDay = 1000;
+                break;
+            case "Haftalık":
+                costPerDay = 850;
+                break;
+            case "Aylık":
+                costPerDay = 700;
+                break;
+        }
+
+        if (totalDays > 0 && costPerDay > 0) {
+            const totalCost = totalDays * costPerDay;
+            document.getElementById('toplamTutar').value = totalCost.toFixed(2) + ' TL';
+        } else {
+            document.getElementById('toplamTutar').value = '';
+        }
     }
-    else
-    {
-        <p>No contracts found.</p>
-    }
-</div>
+</script>

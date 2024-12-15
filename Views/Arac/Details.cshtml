@@ -84,7 +84,7 @@
         <ul>
             @foreach (var sozlesme in Model.Sozlesmes)
             {
-                <li>Contract ID: @sozlesme.IdSozlesme (Signed: @sozlesme.ImzalanmaTarihi)</li>
+                <li>Contract ID: @sozlesme.IdSozlesme (Start: @sozlesme.CikisTarihi - End : @sozlesme.DonusTarihi)</li>
             }
         </ul>
     }

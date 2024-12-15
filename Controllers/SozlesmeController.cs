@@ -31,8 +31,36 @@ namespace RentCar.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(string idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar)
+        public IActionResult Index(string idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar, DateOnly cikisTarihi, DateOnly donusTarihi, string kiraSekli)
         {
+            // Validation
+            if (cikisTarihi > donusTarihi)
+            {
+                ModelState.AddModelError("", "Çıkış Tarihi dönüş tarihinden önce olmalıdır.");
+                return RedirectToAction("Index");
+            }
+
+            // Calculate rental days
+            int totalDays = (donusTarihi.ToDateTime(TimeOnly.MinValue) - cikisTarihi.ToDateTime(TimeOnly.MinValue)).Days;
+
+            // Determine rental cost per day
+            decimal costPerDay = kiraSekli switch
+            {
+                "Günlük" => 1000,
+                "Haftalık" => 850,
+                "Aylık" => 700,
+                _ => 0
+            };
+
+            if (costPerDay == 0)
+            {
+                ModelState.AddModelError("", "Geçersiz kira şekli.");
+                return RedirectToAction("Index");
+            }
+
+            decimal totalCost = totalDays * costPerDay;
+
+
             ViewBag.AvailableCars = _context.Aracs
               .Include(a => a.AracDurumu) // Change AracDurumus to AracDurumu
               .Where(a => a.AracDurumu != null && a.AracDurumu.Aciklama == "Araç mevcut")
@@ -58,11 +86,12 @@ namespace RentCar.Controllers
 
             Sozlesme sozlesme = new Sozlesme
             {
-                ImzalanmaTarihi = imzalanmaTarihi,
-                Sure = sure,
-                Kosullar = kosullar,
                 IdMusteri = musteri.Tc,
-                IdAraba = arac.IdAraba
+                IdAraba = arac.IdAraba,
+                CikisTarihi = cikisTarihi,
+                DonusTarihi = donusTarihi,
+                KiraSekli = kiraSekli,
+                ToplamTutar = totalCost,
             };
 
             _context.Sozlesmes.Add(sozlesme);
@@ -71,7 +100,6 @@ namespace RentCar.Controllers
             TempData["success"] = "Contract created successfully";
             return RedirectToAction("Index"); // Redirect to prevent form resubmission
         }
-
 
     }
 }

@@ -332,12 +332,17 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.IdSozlesme)
                 .HasDefaultValueSql("nextval('\"Sözleşme_ID_sözleşme_seq\"'::regclass)")
                 .HasColumnName("ID_sozlesme");
+            entity.Property(e => e.CikisTarihi).HasColumnName("cikis_tarihi");
+            entity.Property(e => e.DonusTarihi).HasColumnName("donus_tarihi");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
             entity.Property(e => e.IdMusteri)
                 .HasMaxLength(11)
                 .IsFixedLength()
                 .HasColumnName("ID_musteri");
-            entity.Property(e => e.ImzalanmaTarihi).HasColumnName("Imzalanma_tarihi");
+            entity.Property(e => e.KiraSekli)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'daily'::character varying")
+                .HasColumnName("Kira_sekli");
             entity.Property(e => e.ToplamTutar).HasColumnName("Toplam_tutar");
 
             entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Sozlesmes)
