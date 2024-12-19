@@ -65,7 +65,6 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.TcNavigation).WithOne(p => p.Admin)
                 .HasForeignKey<Admin>(d => d.Tc)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Admin_TC_fkey");
         });
 
@@ -173,7 +172,6 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.TcNavigation).WithOne(p => p.Calisan)
                 .HasForeignKey<Calisan>(d => d.Tc)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Calisan_TC_fkey");
         });
 
@@ -273,7 +271,6 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.TcNavigation).WithOne(p => p.Musteri)
                 .HasForeignKey<Musteri>(d => d.Tc)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Musteri_TC_fkey");
         });
 
@@ -282,6 +279,8 @@ public partial class RentCarContext : DbContext
             entity.HasKey(e => e.IdOdeme).HasName("Ödeme_pkey");
 
             entity.ToTable("Odeme");
+
+            entity.HasIndex(e => e.IdFatura, "Odeme_ID_fatura_key").IsUnique();
 
             entity.Property(e => e.IdOdeme)
                 .HasDefaultValueSql("nextval('\"Ödeme_ID_ödeme_seq\"'::regclass)")
@@ -296,9 +295,8 @@ public partial class RentCarContext : DbContext
                 .HasColumnName("Odeme_yontemi");
             entity.Property(e => e.Tutar).HasPrecision(10, 2);
 
-            entity.HasOne(d => d.IdFaturaNavigation).WithMany(p => p.Odemes)
-                .HasForeignKey(d => d.IdFatura)
-                .OnDelete(DeleteBehavior.Cascade)
+            entity.HasOne(d => d.IdFaturaNavigation).WithOne(p => p.Odeme)
+                .HasForeignKey<Odeme>(d => d.IdFatura)
                 .HasConstraintName("Odeme_ID_fatura_fkey");
         });
 
@@ -334,6 +332,9 @@ public partial class RentCarContext : DbContext
                 .HasColumnName("ID_sozlesme");
             entity.Property(e => e.CikisTarihi).HasColumnName("cikis_tarihi");
             entity.Property(e => e.DonusTarihi).HasColumnName("donus_tarihi");
+            entity.Property(e => e.Durum)
+                .HasDefaultValueSql("'\"Aktif\"'::character varying")
+                .HasColumnType("character varying");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
             entity.Property(e => e.IdMusteri)
                 .HasMaxLength(11)
@@ -381,9 +382,6 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.Durum).HasMaxLength(20);
             entity.Property(e => e.GeriDonusTarihi).HasColumnName("Geri_donus_tarihi");
             entity.Property(e => e.IdSozlesme).HasColumnName("ID_sozlesme");
-            entity.Property(e => e.TeslimatAdresi)
-                .HasMaxLength(255)
-                .HasColumnName("Teslimat_adresi");
             entity.Property(e => e.TeslimatTarihi).HasColumnName("Teslimat_tarihi");
 
             entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Teslimats)

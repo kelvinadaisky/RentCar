@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Add Payment";
+}
+
+<h2>Add Payment</h2>
+
+<form asp-action="Create" asp-controller="Odeme" method="post">
+    <div class="form-group">
+        <label for="faturaId">Invoice ID:</label>
+        <input type="number" name="faturaId" id="faturaId" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="tutar">Amount:</label>
+        <input type="number" name="tutar" id="tutar" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="odemeYontemi">Payment Method:</label>
+        <select name="odemeYontemi" id="odemeYontemi" class="form-control" required>
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Payment</button>
+</form>

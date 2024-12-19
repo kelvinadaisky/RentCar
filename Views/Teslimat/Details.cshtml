@@ -1,0 +1,16 @@
+﻿@using RentCar.Models
+@model TeslimatViewModel
+
+<h2>Araba Teslimat</h2>
+
+<form asp-controller="Teslimat" asp-action="Save" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="IdSozlesme" value="@Model.IdSozlesme" />
+
+    <div class="form-group">
+        <label for="HasarDurumu">Hasar Durumu:</label>
+        <textarea id="HasarDurumu" name="HasarDurumu" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Teslimat Kaydet</button>
+</form>

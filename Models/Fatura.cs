@@ -17,5 +17,5 @@ public partial class Fatura
 
     public virtual Sozlesme? IdSozlesmeNavigation { get; set; }
 
-    public virtual ICollection<Odeme> Odemes { get; } = new List<Odeme>();
+    public virtual Odeme? Odeme { get; set; }
 }

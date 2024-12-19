@@ -1,0 +1,113 @@
+﻿@model IEnumerable<RentCar.Models.Fatura>
+
+@{
+    ViewData["Title"] = "Faturas and Payments";
+}
+
+<h2>All Faturas and Their Payments</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Fatura ID</th>
+                <th>Total Amount</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Related Contract</th>
+                <th>Payments</th>
+                <th>Add Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fatura in Model)
+            {
+                <tr>
+                    <td>@fatura.IdFatura</td>
+                    <td>@fatura.OdenenTutar?.ToString("C")</td>
+                    <td>@fatura.DuzenlenmeTarihi?.ToShortDateString()</td>
+                    <td>@fatura.VadeTarihi?.ToShortDateString()</td>
+                    <td>
+                        @if (fatura.IdSozlesmeNavigation != null)
+                        {
+                            <div>
+                                <p><strong>Contract ID:</strong> @fatura.IdSozlesmeNavigation.IdSozlesme</p>
+                                <p><strong>Start Date:</strong> @fatura.IdSozlesmeNavigation.CikisTarihi?.ToShortDateString()</p>
+                                <p><strong>End Date:</strong> @fatura.IdSozlesmeNavigation.DonusTarihi?.ToShortDateString()</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No related contract.</p>
+                        }
+                    </td>
+                    <td>
+                        @if (fatura.Odeme != null)
+                        {
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Payment ID</th>
+                                        <th>Amount</th>
+                                        <th>Method</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@fatura.Odeme.IdOdeme</td>
+                                        <td>
+                                            @if (fatura.Odeme.Tutar.HasValue)
+                                            {
+                                                @fatura.Odeme.Tutar.Value.ToString("C")
+                                            }
+                                            else
+                                            {
+                                                @:"N/A"
+                                            }
+                                        </td>
+                                        <td>@fatura.Odeme.OdemeYontemi</td>
+                                        <td>@fatura.Odeme.OdemeTarihi?.ToShortDateString()</td>
+                                        <td>@fatura.Odeme.OdemeDurumu</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>No payment available.</p>
+                        }
+
+                    </td>
+                    <td>
+                        <!-- Add Payment Form -->
+                        <form asp-action="Create" asp-controller="Odeme" method="post">
+                            <input type="hidden" name="faturaId" value="@fatura.IdFatura" />
+                            <div class="form-group">
+                                <label for="tutar">Amount:</label>
+                                <input type="number" name="tutar" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="odemeYontemi">Payment Method:</label>
+                                <select name="odemeYontemi" class="form-control" required>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Add Payment</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No invoices (Faturas) available.</p>
+}
+
+<a asp-action="Index" asp-controller="Fatura" class="btn btn-secondary mt-3">Back to List</a>

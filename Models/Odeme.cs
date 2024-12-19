@@ -15,7 +15,7 @@ public partial class Odeme
 
     public string? OdemeDurumu { get; set; }
 
-    public int? IdFatura { get; set; }
+    public int IdFatura { get; set; }
 
-    public virtual Fatura? IdFaturaNavigation { get; set; }
+    public virtual Fatura IdFaturaNavigation { get; set; } = null!;
 }

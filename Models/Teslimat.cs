@@ -9,8 +9,6 @@ public partial class Teslimat
 
     public DateOnly? TeslimatTarihi { get; set; }
 
-    public string? TeslimatAdresi { get; set; }
-
     public DateOnly? GeriDonusTarihi { get; set; }
 
     public string? Durum { get; set; }

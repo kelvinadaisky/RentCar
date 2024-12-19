@@ -29,7 +29,6 @@ namespace RentCar.Controllers
             return View(kisiList);
         }
 
-        // GET: Kisi/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -128,7 +127,6 @@ namespace RentCar.Controllers
             return View(kisi);
         }
 
-        // GET: Kisi/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -145,7 +143,6 @@ namespace RentCar.Controllers
             return View(kisi);
         }
 
-        // POST: Kisi/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

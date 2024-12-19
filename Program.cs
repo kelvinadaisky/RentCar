@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using RentCar.Models; // Make sure to use the correct namespace for RentCarContext
+using RentCar.Models;
+using RentCar.Utility; // Make sure to use the correct namespace for RentCarContext
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddControllersWithViews();
 // Register RentCarContext with dependency injection and configure PostgreSQL.
 builder.Services.AddDbContext<RentCarContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); // Ensure the connection string is correct
+
+builder.Services.AddScoped<SozlesmeService>();
 
 var app = builder.Build();
 
