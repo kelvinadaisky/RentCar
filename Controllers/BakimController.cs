@@ -13,6 +13,29 @@ namespace RentCar.Controllers
             _context = context;
         }
 
+        // GET: Bakim/Create
+        public IActionResult Create(int id)
+        {
+            var bakim = new Bakim { IdAraba = id };
+            return View(bakim);
+        }
+
+        // POST: Bakim/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Bakim bakim)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Bakims.Add(bakim);
+                _context.SaveChanges();
+                TempData["success"] = "Maintenance record added successfully!";
+                return RedirectToAction("Details", "Arac", new { id = bakim.IdAraba });
+            }
+            return View(bakim);
+        }
+
+
         // GET: Bakim/Edit/5
         public IActionResult Edit(int id)
         {

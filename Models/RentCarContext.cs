@@ -89,6 +89,8 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Arac");
 
+            entity.HasIndex(e => e.PlakaNumarasi, "Arac_Plaka_numarasi_key").IsUnique();
+
             entity.Property(e => e.IdAraba)
                 .HasDefaultValueSql("nextval('\"Araç_ID_araba_seq\"'::regclass)")
                 .HasColumnName("ID_araba");
@@ -134,6 +136,8 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Bakim");
 
+            entity.HasIndex(e => e.IdAraba, "Bakim_ID_araba_key").IsUnique();
+
             entity.Property(e => e.IdBakim)
                 .HasDefaultValueSql("nextval('\"Bakım_ID_bakım_seq\"'::regclass)")
                 .HasColumnName("ID_bakim");
@@ -145,9 +149,8 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
             entity.Property(e => e.Maliyet).HasPrecision(10, 2);
 
-            entity.HasOne(d => d.IdArabaNavigation).WithMany(p => p.Bakims)
-                .HasForeignKey(d => d.IdAraba)
-                .OnDelete(DeleteBehavior.Cascade)
+            entity.HasOne(d => d.IdArabaNavigation).WithOne(p => p.Bakim)
+                .HasForeignKey<Bakim>(d => d.IdAraba)
                 .HasConstraintName("Bakim_ID_araba_fkey");
         });
 

@@ -23,7 +23,7 @@ public partial class Arac
 
     public virtual AracDurumu? AracDurumu { get; set; }
 
-    public virtual ICollection<Bakim> Bakims { get; } = new List<Bakim>();
+    public virtual Bakim? Bakim { get; set; }
 
     public virtual Ajan? IdAjansNavigation { get; set; }
 

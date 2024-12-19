@@ -1,0 +1,25 @@
+﻿@model RentCar.Models.Sigortum
+
+<h2>Create Insurance</h2>
+
+<form asp-action="Create">
+    <input type="hidden" asp-for="IdAraba" />
+
+    <!-- Other input fields for Sigortum -->
+    <div class="form-group">
+        <label asp-for="SigortaTuru"></label>
+        <input asp-for="SigortaTuru" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SigortaFirma"></label>
+        <input asp-for="SigortaFirma" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SonTarih"></label>
+        <input asp-for="SonTarih" type="date" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

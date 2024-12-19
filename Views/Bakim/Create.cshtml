@@ -1,0 +1,38 @@
+﻿@model RentCar.Models.Bakim
+
+<h2>Create Maintenance</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="BakimTuru" class="control-label"></label>
+        <input asp-for="BakimTuru" class="form-control" />
+        <span asp-validation-for="BakimTuru" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Aciklama" class="control-label"></label>
+        <input asp-for="Aciklama" class="form-control" />
+        <span asp-validation-for="Aciklama" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BaslangicTarihi" class="control-label"></label>
+        <input asp-for="BaslangicTarihi" type="date" class="form-control" />
+        <span asp-validation-for="BaslangicTarihi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BitisTarihi" class="control-label"></label>
+        <input asp-for="BitisTarihi" type="date" class="form-control" />
+        <span asp-validation-for="BitisTarihi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Maliyet" class="control-label"></label>
+        <input asp-for="Maliyet" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="Maliyet" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IdAraba" class="control-label"></label>
+        <input asp-for="IdAraba" class="form-control" />
+        <span asp-validation-for="IdAraba" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

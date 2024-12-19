@@ -17,7 +17,7 @@ public partial class Bakim
 
     public decimal? Maliyet { get; set; }
 
-    public int? IdAraba { get; set; }
+    public int IdAraba { get; set; }
 
-    public virtual Arac? IdArabaNavigation { get; set; }
+    public virtual Arac IdArabaNavigation { get; set; } = null!;
 }

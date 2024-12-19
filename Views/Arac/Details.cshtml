@@ -33,19 +33,15 @@
 
 <div>
     <h4>Maintenance (Bakim)</h4>
-    @if (Model.Bakims.Any())
+    @if (Model.Bakim != null)
     {
-        <ul>
-            @foreach (var bakim in Model.Bakims)
-            {
-                <li>@bakim.Aciklama (Date: @bakim.BaslangicTarihi)</li>
-                <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@bakim.IdBakim" class="btn btn-sm btn-primary">Edit @bakim.BakimTuru</a>
-            }
-        </ul>
+        <p>@Model.Bakim.Aciklama (Date: @Model.Bakim.BaslangicTarihi)</p>
+        <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@Model.Bakim.IdBakim" class="btn btn-sm btn-primary">Edit @Model.Bakim.BakimTuru</a>
     }
     else
     {
         <p>No maintenance records found.</p>
+        <a asp-action="Create" asp-controller="Bakim" asp-route-id="@Model.IdAraba" class="btn btn-sm btn-success">Add Maintenance</a>
     }
 </div>
 
@@ -74,6 +70,7 @@
     else
     {
         <p>No insurance records found.</p>
+        <a asp-action="Create" asp-controller="Sigorta" asp-route-id="@Model.IdAraba" class="btn btn-success">Add Insurance</a>
     }
 </div>
 
