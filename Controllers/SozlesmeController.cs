@@ -23,8 +23,10 @@ namespace RentCar.Controllers
             ViewBag.Customers = _context.Musteris.Include(m => m.TcNavigation).ToList();
             var sozlesmes = _context.Sozlesmes
                 .Include(s => s.IdMusteriNavigation) // Load Musteri
-                .ThenInclude(m => m.TcNavigation) // Load Kisi through Musteri
+                    .ThenInclude(m => m.TcNavigation) // Load Kisi through Musteri
+                .Include(s => s.IdArabaNavigation) // Load Araba
                 .ToList();
+
             // Get the list of contracts
             return View(sozlesmes);
         }
@@ -33,10 +35,18 @@ namespace RentCar.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(string idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar, DateOnly cikisTarihi, DateOnly donusTarihi, string kiraSekli)
         {
+            // Validation: Çıkış Tarihi should be within 3 days from today
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            if ((cikisTarihi.DayNumber - today.DayNumber) > 3)
+            {
+                TempData["error"] = "Çıkış Tarihi bugünden en fazla 3 gün sonrasında olmalıdır";
+                return RedirectToAction("Index");
+            }
+
             // Validation
             if (cikisTarihi > donusTarihi)
             {
-                ModelState.AddModelError("", "Çıkış Tarihi dönüş tarihinden önce olmalıdır.");
+                TempData["error"] = "Çıkış Tarihi dönüş tarihinden önce olmalıdır.";
                 return RedirectToAction("Index");
             }
 
@@ -54,7 +64,7 @@ namespace RentCar.Controllers
 
             if (costPerDay == 0)
             {
-                ModelState.AddModelError("", "Geçersiz kira şekli.");
+                TempData["error"] = "Geçersiz kira şekli.";
                 return RedirectToAction("Index");
             }
 

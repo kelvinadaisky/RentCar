@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<RentCar.Models.Kisi>
 
-
 <h1>All Persons</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
 
 <div class="mb-3">
     <!-- Filter buttons -->
@@ -13,10 +14,25 @@
 
 <div class="mb-3">
     <a href="@Url.Action("Create", "Kisi")" class="btn btn-success">Add New Person</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
 </div>
 
-<table class="table table-striped">
-    <thead>
+</div>
+
+<div class="mb-3">
+    <!-- Search Area -->
+    <form method="get" action="@Url.Action("Index", "Kisi")">
+        <div class="input-group">
+            <input type="text" name="searchQuery" class="form-control" placeholder="Search by name or TC number" />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
         <tr>
             <th>TC Number</th>
             <th>First Name</th>

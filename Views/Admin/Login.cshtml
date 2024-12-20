@@ -1,0 +1,47 @@
+﻿@model RentCar.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Admin Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center" style="margin-top: 50px;">
+            <div class="col-md-6">
+                <h2 class="text-center">@ViewData["Title"]</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form asp-action="Login" method="post">
+                            <div class="form-group">
+                                <label for="Tc">TC:</label>
+                                <input asp-for="Tc" class="form-control" />
+                                <span asp-validation-for="Tc" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Sifre">Şifre:</label>
+                                <input asp-for="Sifre" type="password" class="form-control" />
+                                <span asp-validation-for="Sifre" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </form>
+                        <div class="text-center" style="margin-top: 10px;">
+                            <a href="">Forgot your password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

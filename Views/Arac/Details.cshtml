@@ -1,96 +1,121 @@
 ﻿@model RentCar.Models.Arac
 
-<h2>Car Details</h2>
-
-<div>
-    <h4>Car Information</h4>
-    <dl class="row">
-        <dt class="col-sm-2">Marka</dt>
-        <dd class="col-sm-10">@Model.Marka</dd>
-
-        <dt class="col-sm-2">Model</dt>
-        <dd class="col-sm-10">@Model.Model</dd>
-
-        <dt class="col-sm-2">Year</dt>
-        <dd class="col-sm-10">@Model.UretimYili</dd>
-
-        <dt class="col-sm-2">Color</dt>
-        <dd class="col-sm-10">@Model.Renk</dd>
-
-        <dt class="col-sm-2">Kilometers</dt>
-        <dd class="col-sm-10">@Model.Kilometre</dd>
-
-        <dt class="col-sm-2">License Plate</dt>
-        <dd class="col-sm-10">@Model.PlakaNumarasi</dd>
-    </dl>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-center mb-0">Car Details</h2>
+    <a href="@Url.Action("Index", "Arac")" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
 </div>
 
-<div class="form-group">
-    <label>Ajans</label>
-    <div>@(Model.IdAjansNavigation?.AjansAdi ?? "N/A")</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Car Information</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Marka</dt>
+            <dd class="col-sm-9">@Model.Marka</dd>
+
+            <dt class="col-sm-3">Model</dt>
+            <dd class="col-sm-9">@Model.Model</dd>
+
+            <dt class="col-sm-3">Year</dt>
+            <dd class="col-sm-9">@Model.UretimYili</dd>
+
+            <dt class="col-sm-3">Color</dt>
+            <dd class="col-sm-9">@Model.Renk</dd>
+
+            <dt class="col-sm-3">Kilometers</dt>
+            <dd class="col-sm-9">@Model.Kilometre</dd>
+
+            <dt class="col-sm-3">License Plate</dt>
+            <dd class="col-sm-9">@Model.PlakaNumarasi</dd>
+        </dl>
+    </div>
 </div>
 
-
-<div>
-    <h4>Maintenance (Bakim)</h4>
-    @if (Model.Bakim != null)
-    {
-        <p>@Model.Bakim.Aciklama (Date: @Model.Bakim.BaslangicTarihi)</p>
-        <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@Model.Bakim.IdBakim" class="btn btn-sm btn-primary">Edit @Model.Bakim.BakimTuru</a>
-    }
-    else
-    {
-        <p>No maintenance records found.</p>
-        <a asp-action="Create" asp-controller="Bakim" asp-route-id="@Model.IdAraba" class="btn btn-sm btn-success">Add Maintenance</a>
-    }
+<div class="card  mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Agency (Ajans)</h4>
+    </div>
+    <div class="card-body">
+    @(Model.IdAjansNavigation?.AjansAdi ?? "N/A")
+    </div>
 </div>
 
-<div>
-    <h4>Car Status (Arac Durumu)</h4>
-    @if (Model.AracDurumu != null)
-    {
-        <p>@Model.AracDurumu.Aciklama (Status Date: @Model.AracDurumu.GuncellemeTarihi)</p>
-        <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu.IdDurum" class="btn btn-primary">Edit Status</a>
-    }
-    else
-    {
-        <p>No status available.</p>
-        <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu?.IdDurum" class="btn btn-primary">Add Status</a>
-    }
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Maintenance (Bakim)</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Bakim != null)
+        {
+            <p>@Model.Bakim.Aciklama (Date: @Model.Bakim.BaslangicTarihi)</p>
+            <a asp-action="Edit" asp-controller="Bakim" asp-route-id="@Model.Bakim.IdBakim" class="btn btn-sm btn-primary">Edit @Model.Bakim.BakimTuru</a>
+        }
+        else
+        {
+            <p>No maintenance records found.</p>
+            <a asp-action="Create" asp-controller="Bakim" asp-route-id="@Model.IdAraba" class="btn btn-sm btn-success">Add Maintenance</a>
+        }
+    </div>
 </div>
 
-
-<div>
-    <h4>Insurance (Sigorta)</h4>
-    @if (Model.Sigortum != null)
-    {
-        <p>@Model.Sigortum.SigortaTuru from @Model.Sigortum.SigortaFirma (Expires: @Model.Sigortum.SonTarih)</p>
-        <a asp-action="Edit" asp-controller="Sigorta" asp-route-id="@Model.Sigortum.IdSigorta" class="btn btn-primary">Edit Insurance</a>
-    }
-    else
-    {
-        <p>No insurance records found.</p>
-        <a asp-action="Create" asp-controller="Sigorta" asp-route-id="@Model.IdAraba" class="btn btn-success">Add Insurance</a>
-    }
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Car Status (Arac Durumu)</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.AracDurumu != null)
+        {
+            <p>@Model.AracDurumu.Aciklama (Status Date: @Model.AracDurumu.GuncellemeTarihi)</p>
+            <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu.IdDurum" class="btn btn-primary">Edit Status</a>
+        }
+        else
+        {
+            <p>No status available.</p>
+            <a asp-action="Edit" asp-controller="AracDurumu" asp-route-id="@Model.AracDurumu?.IdDurum" class="btn btn-primary">Add Status</a>
+        }
+    </div>
 </div>
 
-<div>
-    <h4>Contracts (Sozlesme)</h4>
-    @if (Model.Sozlesmes.Any())
-    {
-        <ul>
-            @foreach (var sozlesme in Model.Sozlesmes)
-            {
-                <li>Contract ID: @sozlesme.IdSozlesme (Start: @sozlesme.CikisTarihi - End : @sozlesme.DonusTarihi)</li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>No contracts found.</p>
-    }
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Insurance (Sigorta)</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Sigortum != null)
+        {
+            <p>@Model.Sigortum.SigortaTuru from @Model.Sigortum.SigortaFirma (Expires: @Model.Sigortum.SonTarih)</p>
+            <a asp-action="Edit" asp-controller="Sigorta" asp-route-id="@Model.Sigortum.IdSigorta" class="btn btn-primary">Edit Insurance</a>
+        }
+        else
+        {
+            <p>No insurance records found.</p>
+            <a asp-action="Create" asp-controller="Sigorta" asp-route-id="@Model.IdAraba" class="btn btn-success">Add Insurance</a>
+        }
+    </div>
 </div>
 
-<a asp-action="Index" class="btn btn-secondary">Back to List</a>
-<a asp-action="Edit" asp-route-id="@Model.IdAraba" class="btn btn-primary">Edit</a>
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0">Contracts (Sozlesme)</h4>
+    </div>
+    <div class="card-body">
+        @if (Model.Sozlesmes.Any())
+        {
+            <ul class="list-group">
+                @foreach (var sozlesme in Model.Sozlesmes)
+                {
+                    <li class="list-group-item">Contract ID: @sozlesme.IdSozlesme (Start: @sozlesme.CikisTarihi - End: @sozlesme.DonusTarihi)</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No contracts found.</p>
+        }
+    </div>
+</div>
+
 

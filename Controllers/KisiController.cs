@@ -16,13 +16,22 @@ namespace RentCar.Controllers
         }
 
         // GET: Kisi
-        public async Task<IActionResult> Index(string roleFilter)
+        public async Task<IActionResult> Index(string roleFilter, string searchQuery)
         {
             IQueryable<Kisi> query = _context.Kisis.AsQueryable();
 
+            // Filter by role if specified
             if (!string.IsNullOrEmpty(roleFilter))
             {
-                query = query.Where(k => k.Role == roleFilter); // Filter by role
+                query = query.Where(k => k.Role == roleFilter);
+            }
+
+            // Search functionality
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(k => k.Ad.Contains(searchQuery) ||
+                                         k.Soyad.Contains(searchQuery) ||
+                                         k.Tc.Contains(searchQuery));
             }
 
             var kisiList = await query.ToListAsync();

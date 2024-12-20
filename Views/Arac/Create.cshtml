@@ -1,13 +1,9 @@
 ﻿@model RentCar.Models.Arac
 
 <h1>Create New Car</h1>
-
-<h4>Arac</h4>
 <hr />
 
-<!-- Form for creating a new car -->
 <form asp-action="Create" method="post">
-
     <div class="form-group">
         <label asp-for="Marka" class="control-label"></label>
         <input asp-for="Marka" class="form-control" />
@@ -37,22 +33,21 @@
         <input asp-for="PlakaNumarasi" class="form-control" />
         <span asp-validation-for="PlakaNumarasi" class="text-danger"></span>
     </div>
-    
+
     <div class="form-group">
         <label for="IdAjans">Agency</label>
-        <select asp-for="IdAjans" class="form-control" asp-items="@(ViewData["AjansList"] as List<SelectListItem>)">
+        <select asp-for="IdAjans" class="form-control" asp-items="ViewBag.AjansList">
             <option value="">Select Agency</option>
         </select>
         <span asp-validation-for="IdAjans" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">Create</button>
         <a href="@Url.Action("Index", "Arac")" class="btn btn-secondary">Back to List</a>
     </div>
 </form>
 
-<!-- Validation Summary -->
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 @section Scripts {

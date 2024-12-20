@@ -1,14 +1,13 @@
 ﻿@model RentCar.Models.Arac
 
-
 <h1>Edit Car</h1>
 
-<h4>Arac</h4>
 <hr />
 
 <form asp-action="Edit">
-    <!-- Hidden field to track IdAraba -->
+    <!-- Hidden field for IdAraba -->
     <input asp-for="IdAraba" type="hidden" />
+
     <div class="form-group">
         <label asp-for="Marka" class="control-label"></label>
         <input asp-for="Marka" class="form-control" />
@@ -40,13 +39,12 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="IdAjans" class="control-label">Ajans</label>
+        <label asp-for="IdAjans" class="control-label">Agency</label>
         <select asp-for="IdAjans" class="form-control" asp-items="ViewBag.AjansList"></select>
         <span asp-validation-for="IdAjans" class="text-danger"></span>
     </div>
 
-
-    <div class="form-group">
+    <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">Save</button>
         <a href="@Url.Action("Index", "Arac")" class="btn btn-secondary">Back to List</a>
     </div>
@@ -59,4 +57,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
- 

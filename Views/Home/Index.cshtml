@@ -1,8 +1,122 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<div class="row text-center mt-4">
+    <!-- Cars -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-car-front-fill fs-1 text-primary"></i>
+                <h5 class="card-title mt-3">Cars</h5>
+                <a href="@Url.Action("Index", "Arac")" class="btn btn-primary mt-2">Manage Cars</a>
+            </div>
+        </div>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <!-- Customers -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-people-fill fs-1 text-success"></i>
+                <h5 class="card-title mt-3">Customers and Employees</h5>
+                <a href="@Url.Action("Index", "Kisi")" class="btn btn-success mt-2">View Customers</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contracts -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-file-earmark-text-fill fs-1 text-warning"></i>
+                <h5 class="card-title mt-3">Contracts</h5>
+                <a href="@Url.Action("Index", "Sozlesme")" class="btn btn-warning mt-2">View Contracts</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center mt-4">
+    <!-- Ajans -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-building fs-1 text-info"></i>
+                <h5 class="card-title mt-3">Ajans</h5>
+                <a href="@Url.Action("Index", "Ajans")" class="btn btn-info mt-2">Manage Ajans</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-cash-stack fs-1 text-danger"></i>
+                <h5 class="card-title mt-3">Payments</h5>
+                <a href="@Url.Action("Details", "Fatura")" class="btn btn-danger mt-2">View Payments</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <i class="bi bi-bar-chart-line-fill fs-1 text-secondary"></i>
+                <h5 class="card-title mt-3">Reports</h5>
+                <a href="@Url.Action("Reports", "Admin")" class="btn btn-secondary mt-2">View Reports</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row text-center mt-5">
+    <div class="col-md-3">
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                <h5>Total Cars</h5>
+                <p class="fs-3 text-primary">120</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                <h5>Total Customers</h5>
+                <p class="fs-3 text-success">450</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                <h5>Active Contracts</h5>
+                <p class="fs-3 text-warning">75</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow bg-light">
+            <div class="card-body">
+                <h5>Monthly Revenue</h5>
+                <p class="fs-3 text-danger">$25,000</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Logs -->
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="card-title">Recent Activities</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">John Doe rented a car on <strong>July 20, 2024</strong>.</li>
+                    <li class="list-group-item">Payment received from Jane Smith for <strong>Contract #1023</strong>.</li>
+                    <li class="list-group-item">Added 5 new cars to the inventory.</li>
+                    <li class="list-group-item">Updated contract details for Customer <strong>Adam Johnson</strong>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
