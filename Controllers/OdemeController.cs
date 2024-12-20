@@ -7,12 +7,10 @@ namespace RentCar.Controllers
     public class OdemeController : Controller
     {
         private readonly RentCarContext _context;
-        private readonly SozlesmeService _sozlesmeService;
 
-        public OdemeController(RentCarContext context, SozlesmeService sozlesmeService)
+        public OdemeController(RentCarContext context)
         {
             _context = context;
-            _sozlesmeService = sozlesmeService;
 
         }
 
@@ -41,11 +39,6 @@ namespace RentCar.Controllers
             _context.Odemes.Add(odeme);
             _context.SaveChanges();
 
-            // Use fatura.IdSozlesme instead of model.IdSozlesme
-            if (fatura.IdSozlesme.HasValue)
-            {
-                _sozlesmeService.UpdateSozlesmeStatus(fatura.IdSozlesme.Value);
-            }
 
             TempData["SuccessMessage"] = "Ödeme başarıyla kaydedildi.";
             return RedirectToAction("Details", "Fatura", new { id = faturaId });

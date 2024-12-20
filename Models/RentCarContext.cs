@@ -336,7 +336,7 @@ public partial class RentCarContext : DbContext
             entity.Property(e => e.CikisTarihi).HasColumnName("cikis_tarihi");
             entity.Property(e => e.DonusTarihi).HasColumnName("donus_tarihi");
             entity.Property(e => e.Durum)
-                .HasDefaultValueSql("'\"Aktif\"'::character varying")
+                .HasDefaultValueSql("'Aktif'::character varying")
                 .HasColumnType("character varying");
             entity.Property(e => e.IdAraba).HasColumnName("ID_araba");
             entity.Property(e => e.IdMusteri)

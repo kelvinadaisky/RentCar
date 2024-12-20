@@ -8,13 +8,11 @@ namespace RentCar.Controllers
     public class TeslimatController : Controller
     {
         private readonly RentCarContext _context;
-        private readonly SozlesmeService _sozlesmeService;
 
 
-        public TeslimatController(RentCarContext context , SozlesmeService sozlesmeService)
+        public TeslimatController(RentCarContext context)
         {
             _context = context;
-            _sozlesmeService = sozlesmeService;
         }
         // GET: Teslimat/Details
         [HttpGet]
@@ -60,19 +58,13 @@ namespace RentCar.Controllers
             _context.Teslimats.Add(teslimat);
             _context.SaveChanges();
 
-            sozlesme.Durum = "Tamamlandi";
-            _context.Sozlesmes.Update(sozlesme);
-            _context.SaveChanges();
-
-            // Step 3: Create HasarDurumu record
             var hasarDurumu = new HasarDurumu
             {
-                IdTeslimat = teslimat.IdTeslimat, // Link to Teslimat
+                IdTeslimat = teslimat.IdTeslimat,
                 Durumu = model.HasarDurumu
             };
             _context.HasarDurumus.Add(hasarDurumu);
             _context.SaveChanges();
-            _sozlesmeService.UpdateSozlesmeStatus(model.IdSozlesme);
             TempData["SuccessMessage"] = "Teslimat ve Hasar Durumu başarıyla kaydedildi.";
             return RedirectToAction("Index", "Home");
         }

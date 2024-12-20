@@ -62,7 +62,7 @@ namespace RentCar.Controllers
 
 
             ViewBag.AvailableCars = _context.Aracs
-              .Include(a => a.AracDurumu) // Change AracDurumus to AracDurumu
+              .Include(a => a.AracDurumu)
               .Where(a => a.AracDurumu != null && a.AracDurumu.Aciklama == "Araç mevcut")
               .ToList();
             ViewBag.Customers = _context.Musteris.Include(m => m.TcNavigation).ToList();
@@ -99,32 +99,6 @@ namespace RentCar.Controllers
 
             TempData["success"] = "Contract created successfully";
             return RedirectToAction("Index"); // Redirect to prevent form resubmission
-        }
-
-        public void UpdateSozlesmeStatus(int sozlesmeId)
-        {
-            // Fetch the contract
-            var sozlesme = _context.Sozlesmes.FirstOrDefault(s => s.IdSozlesme == sozlesmeId);
-            if (sozlesme == null) return;
-
-            // Check if the vehicle has been delivered
-            var teslimat = _context.Teslimats.FirstOrDefault(t => t.IdSozlesme == sozlesmeId && t.Durum == "Teslim edildi");
-
-            // Check if the invoice is fully paid
-            var fatura = _context.Faturas.FirstOrDefault(f => f.IdSozlesme == sozlesmeId);
-            // Validate the payment (Odeme)
-            var isInvoicePaid = fatura != null &&
-                                fatura.Odeme != null &&
-                                fatura.Odeme.Tutar.HasValue &&
-                                fatura.Odeme.Tutar.Value >= fatura.OdenenTutar;
-
-            // Update the contract status if both conditions are met
-            if (teslimat != null && isInvoicePaid)
-            {
-                sozlesme.Durum = "Tamamlandi"; // Mark the contract as completed
-                _context.Sozlesmes.Update(sozlesme);
-                _context.SaveChanges();
-            }
         }
 
     }
