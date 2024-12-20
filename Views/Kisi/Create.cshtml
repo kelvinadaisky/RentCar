@@ -28,13 +28,27 @@
         <input type="email" class="form-control" id="EPosta" name="EPosta" />
     </div>
     <div class="form-group">
-        <label for="Role">Role</label>
-        <select class="form-control" id="Role" name="Role" required>
-            <option value="Admin">Admin</option>
-            <option value="Musteri">Customer</option>
-            <option value="Çalışan">Employee</option>
+        <label for="Role">Role:</label>
+        <select id="Role" name="Role" class="form-control" onchange="loadRoleForm(this.value)">
+            <option value="">Select a Role</option>
+            @foreach (var role in ViewBag.RoleOptions as List<SelectListItem>)
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
         </select>
+    </div>
+    <div id="role-specific-form">
+        <!-- Partial view for role-specific inputs will be loaded here -->
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
+
+@section Scripts {
+    <script>
+        function loadRoleForm(role) {
+            const url = '@Url.Action("RoleSpecificForm", "Kisi")' + '?role=' + role;
+            $('#role-specific-form').load(url);
+        }
+    </script>
+}

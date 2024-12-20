@@ -50,24 +50,138 @@ namespace RentCar.Controllers
             return View(kisi);
         }
 
-        // GET: Kisi/Create
         public IActionResult Create()
         {
+            var roleOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Admin", Value = "Admin" },
+                new SelectListItem { Text = "Musteri", Value = "Musteri" },
+                new SelectListItem { Text = "Çalışan", Value = "Çalışan" }
+            };
+
+            ViewBag.RoleOptions = roleOptions;
             return View();
         }
 
-        // POST: Kisi/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Tc,Ad,Soyad,Telefon,EPosta,Role")] Kisi kisi)
+        public IActionResult Create(Kisi kisi)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(kisi);
+                if (!_context.Kisis.Any(k => k.Tc == kisi.Tc))
+                {
+                    _context.Kisis.Add(kisi);
+                    _context.SaveChanges();
+                }
+
+                if (kisi.Role == "Musteri")
+                {
+                    return RedirectToAction("CreateMusteri", new { tc = kisi.Tc });
+                }
+                else if (kisi.Role == "Çalışan")
+                {
+                    return RedirectToAction("CreateCalisan", new { tc = kisi.Tc });
+                }
+                else if (kisi.Role == "Admin")
+                {
+                    return RedirectToAction("CreateAdmin", new { tc = kisi.Tc });
+                }
+            }
+
+            return View(kisi);
+        }
+
+
+        public IActionResult CreateMusteri(string tc)
+        {
+            var musteri = new Musteri { Tc = tc };
+            return View(musteri);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateMusteri(Musteri musteri, Ehliyet ehliyet)
+        {
+            ModelState.Remove("TcNavigation");
+            ModelState.Remove("MusteriTcNavigation");
+            ModelState.Remove("MusteriTc");
+            if (ModelState.IsValid)
+            {
+                _context.Musteris.Add(musteri);
+                ehliyet.MusteriTc = musteri.Tc;
+                _context.Ehliyets.Add(ehliyet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(kisi);
+            return View(musteri);
+        }
+
+        public IActionResult CreateCalisan(string tc)
+        {
+            // Fetch the list of Ajans from the database
+            var ajansList = _context.Ajans
+                .Select(a => new SelectListItem
+                {
+                    Text = a.AjansAdi,
+                    Value = a.IdAjans.ToString()
+                })
+                .ToList();
+
+            // Pass the list to the view via ViewBag
+            ViewBag.AjansList = ajansList;
+
+            // Create a new Calisan object with the provided TC
+            var calisan = new Calisan { Tc = tc };
+            return View(calisan);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCalisan(Calisan calisan)
+        {
+            ModelState.Remove("TcNavigation");
+            ModelState.Remove("IdAjansNavigation");
+            if (ModelState.IsValid)
+            {
+                _context.Calisans.Add(calisan);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            var ajansList = _context.Ajans
+                .Select(a => new SelectListItem
+                {
+                    Text = a.AjansAdi,
+                    Value = a.IdAjans.ToString()
+                })
+                .ToList();
+
+            // Pass the list to the view via ViewBag
+            ViewBag.AjansList = ajansList;
+            return View(calisan);
+        }
+
+        public IActionResult CreateAdmin(string tc)
+        {
+            var admin = new Admin { Tc = tc };
+            return View(admin);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdmin(Admin admin)
+        {
+            ModelState.Remove("TcNavigation");
+
+            if (ModelState.IsValid)
+            {
+                _context.Admins.Add(admin);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(admin);
         }
 
         // GET: Kisi/Edit/5
@@ -85,7 +199,7 @@ namespace RentCar.Controllers
             }
             var roleOptions = new List<SelectListItem>
             {
-                //new SelectListItem { Text = "Admin", Value = "Admin" },
+                new SelectListItem { Text = "Admin", Value = "Admin" },
                 new SelectListItem { Text = "Musteri", Value = "Musteri" },
                 new SelectListItem { Text = "Çalışan", Value = "Çalışan" }
             };

@@ -1,0 +1,14 @@
+﻿@model RentCar.Models.Admin
+
+<h2>Create Admin</h2>
+<form asp-action="CreateAdmin">
+    @Html.HiddenFor(model => model.Tc)
+
+    <div class="form-group">
+        <label asp-for="Sifre"></label>
+        <input asp-for="Sifre" class="form-control" type="password" />
+        <span asp-validation-for="Sifre" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

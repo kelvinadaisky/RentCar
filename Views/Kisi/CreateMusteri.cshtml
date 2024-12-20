@@ -1,0 +1,26 @@
+﻿@model RentCar.Models.Musteri
+<form asp-action="CreateMusteri">
+    @Html.HiddenFor(m => m.Tc)
+    <div class="form-group">
+        <label asp-for="DogumTarihi"></label>
+        <input asp-for="DogumTarihi" class="form-control" type="date" />
+    </div>
+    <h4>Ehliyet Information</h4>
+    <div class="form-group">
+        <label for="EhliyetNo">Ehliyet No</label>
+        <input id="EhliyetNo" name="EhliyetNo" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="EhliyetTarihi">Ehliyet Tarihi</label>
+        <input id="EhliyetTarihi" name="EhliyetTarihi" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label for="SonGecerlilikTarihi">Son Geçerlilik Tarihi</label>
+        <input id="SonGecerlilikTarihi" name="SonGecerlilikTarihi" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label for="Kategori">Kategori</label>
+        <input id="Kategori" name="Kategori" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
