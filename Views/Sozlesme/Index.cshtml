@@ -3,125 +3,132 @@
     ViewBag.Title = "Sozlesme Index";
 }
 
-<h2>Sözleşme Yönetimi</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-center mb-0">Sözleşme Yönetimi</h2>
 
-@if (TempData["success"] != null)
-{
-    <div class="alert alert-success">@TempData["success"]</div>
-}
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
-}
-
-<form asp-action="Index" method="post">
-    <div class="form-group">
-        <label for="idMusteri">Müşteri</label>
-        <select id="idMusteri" name="idMusteri" class="form-control" required>
-            <option value="" disabled selected>Bir müşteri seçin</option>
-            @foreach (var customer in ViewBag.Customers)
-            {
-                <option value="@customer.Tc">@customer.TcNavigation?.Ad @customer.TcNavigation?.Soyad</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="idAraba">Araç</label>
-        <select id="idAraba" name="idAraba" class="form-control" required>
-            <option value="" disabled selected>Bir araç seçin</option>
-            @foreach (var car in ViewBag.AvailableCars)
-            {
-                <option value="@car.IdAraba">@car.Marka @car.Model (@car.PlakaNumarasi)</option>
-            }
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="cikisTarihi">Çıkış Tarihi</label>
-        <input type="date" id="cikisTarihi" name="cikisTarihi" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label for="donusTarihi">Dönüş Tarihi</label>
-        <input type="date" id="donusTarihi" name="donusTarihi" class="form-control" required onchange="calculateTotal()" />
-    </div>
-
-    <div class="form-group">
-        <label for="kiraSekli">Kira Şekli</label>
-        <select id="kiraSekli" name="kiraSekli" class="form-control" required onchange="calculateTotal()">
-            <option value="" disabled selected>Kira şekli seçin</option>
-            <option value="Günlük">Günlük</option>
-            <option value="Haftalık">Haftalık</option>
-            <option value="Aylık">Aylık</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="toplamTutar">Toplam Tutar</label>
-        <input type="text" id="toplamTutar" name="toplamTutar" class="form-control" readonly />
+        <div>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
     </div>
 
 
-    <button type="submit" class="btn btn-success">Sözleşme Oluştur</button>
-    <button type="button" class="btn btn-primary" onclick="calculateTotal()">Hesapla</button>
-</form>
+    <!-- Contract Creation Form -->
+    <form asp-action="Index" method="post" class="mb-4">
+        <fieldset>
+            <legend class="text-primary">Yeni Sözleşme Oluştur</legend>
 
-<h3>Mevcut Sözleşmeler</h3>
-@if (Model != null && Model.Any())
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Müşteri</th>
-                <th>Araç Plakasi</th>
-                <th>Çıkış Tarihi</th>
-                <th>Dönüş Tarihi</th>
-                <th>Kira Şekli</th>
-                <th>Toplam Tutar</th>
-                <th>Durum</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var sozlesme in Model)
-            {
-                <tr>
-                    <td>
-                        @sozlesme.IdMusteriNavigation?.TcNavigation?.Ad
-                        @sozlesme.IdMusteriNavigation?.TcNavigation?.Soyad
-                    </td>
-                    <td>@sozlesme.IdArabaNavigation.PlakaNumarasi</td>
-                    <td>@sozlesme.CikisTarihi</td>
-                    <td>@sozlesme.DonusTarihi</td>
-                    <td>@sozlesme.KiraSekli</td>
-                    <td>@string.Format("{0:C}", sozlesme.ToplamTutar)</td>
-                    <td>@sozlesme.Durum</td>
-                   
-                    <td>
-                        @if (!((sozlesme.Durum == "Tamamlandi") || (sozlesme.Durum == "Teslim edildi ama odenmedi")))
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="idMusteri">Müşteri</label>
+                    <select id="idMusteri" name="idMusteri" class="form-control" required>
+                        <option value="" disabled selected>Bir müşteri seçin</option>
+                        @foreach (var customer in ViewBag.Customers)
+                        {
+                            <option value="@customer.Tc">@customer.TcNavigation?.Ad @customer.TcNavigation?.Soyad</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="idAraba">Araç</label>
+                    <select id="idAraba" name="idAraba" class="form-control" required>
+                        <option value="" disabled selected>Bir araç seçin</option>
+                        @foreach (var car in ViewBag.AvailableCars)
+                        {
+                            <option value="@car.IdAraba">@car.Marka @car.Model (@car.PlakaNumarasi)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="cikisTarihi">Çıkış Tarihi</label>
+                    <input type="date" id="cikisTarihi" name="cikisTarihi" class="form-control" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="donusTarihi">Dönüş Tarihi</label>
+                    <input type="date" id="donusTarihi" name="donusTarihi" class="form-control" required onchange="calculateTotal()" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="kiraSekli">Kira Şekli</label>
+                <select id="kiraSekli" name="kiraSekli" class="form-control" required onchange="calculateTotal()">
+                    <option value="" disabled selected>Kira şekli seçin</option>
+                    <option value="Günlük">Günlük</option>
+                    <option value="Haftalık">Haftalık</option>
+                    <option value="Aylık">Aylık</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="toplamTutar">Toplam Tutar</label>
+                <input type="text" id="toplamTutar" name="toplamTutar" class="form-control" readonly />
+            </div>
+
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-success">Sözleşme Oluştur</button>
+                <button type="button" class="btn btn-primary" onclick="calculateTotal()">Hesapla</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <!-- Existing Contracts Section -->
+    <h3 class="mb-3">Mevcut Sözleşmeler</h3>
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Müşteri</th>
+                        <th>Araç Plakası</th>
+                        <th>Çıkış Tarihi</th>
+                        <th>Dönüş Tarihi</th>
+                        <th>Kira Şekli</th>
+                        <th>Toplam Tutar</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sozlesme in Model)
                     {
-
-                        <form asp-controller="Teslimat" asp-action="Details" method="get" style="display:inline;">
-                            <input type="hidden" name="id" value="@sozlesme.IdSozlesme" />
-                            <button type="submit" class="btn btn-success">Teslimat</button>
-                        </form>
+                        <tr>
+                            <td>
+                                @sozlesme.IdMusteriNavigation?.TcNavigation?.Ad
+                                @sozlesme.IdMusteriNavigation?.TcNavigation?.Soyad
+                            </td>
+                            <td>@sozlesme.IdArabaNavigation.PlakaNumarasi</td>
+                            <td>@sozlesme.CikisTarihi</td>
+                            <td>@sozlesme.DonusTarihi</td>
+                            <td>@sozlesme.KiraSekli</td>
+                            <td>@string.Format("{0:C}", sozlesme.ToplamTutar)</td>
+                            <td>@sozlesme.Durum</td>
+                            <td>
+                                @if (!((sozlesme.Durum == "Tamamlandi") || (sozlesme.Durum == "Teslim edildi ama odenmedi")))
+                                {
+                                    <form asp-controller="Teslimat" asp-action="Details" method="get" style="display:inline;">
+                                        <input type="hidden" name="id" value="@sozlesme.IdSozlesme" />
+                                        <button type="submit" class="btn btn-success btn-sm">Teslimat</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
                     }
-                    </td>
-                   
-                    
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <tr>
-        <td colspan="7" class="text-center">Mevcut bir sözleşme yok.</td>
-    </tr>
-}
-
-
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-muted">Mevcut bir sözleşme yok.</p>
+    }
+</div>
 
 <script>
     function calculateTotal() {
