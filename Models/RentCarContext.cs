@@ -14,22 +14,6 @@ public partial class RentCarContext : DbContext
         : base(options)
     {
     }
-    public DbSet<RevenueByCar> RevenuesByCar { get; set; }
-    public DbSet<TopCustomer> TopCustomers { get; set; }
-    public DbSet<MonthlyRevenueByAgency> MonthlyRevenuesByAgence { get; set; }
-
-
-    // Table-valued functions
-    public IQueryable<RevenueByCar> GetRevenueByCar() =>
-        RevenuesByCar.FromSqlRaw("SELECT * FROM GetRevenueByCar()");
-
-    public IQueryable<TopCustomer> GetTopCustomers(int n) =>
-    TopCustomers.FromSqlRaw("SELECT * FROM gettopcustomers({0})", n);
-
-
-    public IQueryable<MonthlyRevenueByAgency> GetMonthlyRevenueByAgence() =>
-        MonthlyRevenuesByAgence.FromSqlRaw("SELECT * FROM GetMonthlyRevenueByAjans()");
-
 
     public virtual DbSet<Admin> Admins { get; set; }
 
@@ -67,30 +51,6 @@ public partial class RentCarContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<RevenueByCar>().HasNoKey();
-        modelBuilder.Entity<TopCustomer>().HasNoKey();
-        modelBuilder.Entity<MonthlyRevenueByAgency>().HasNoKey();
-
-        modelBuilder.Entity<MonthlyRevenue>(entity =>
-        {
-            entity.HasNoKey(); // No primary key
-        });
-
-        modelBuilder.Entity<StatsView>(entity =>
-        {
-            entity.HasNoKey(); // This indicates that it does not have a primary key
-        });
-
-        modelBuilder.Entity<TotalCarsCount>(entity =>
-        {
-            entity.HasNoKey(); // No primary key
-        });
-
-        modelBuilder.Entity<TotalCustomersCount>(entity =>
-        {
-            entity.HasNoKey(); // No primary key
-        });
-
         modelBuilder.Entity<Admin>(entity =>
         {
             entity.HasKey(e => e.Tc).HasName("Admin_pkey");

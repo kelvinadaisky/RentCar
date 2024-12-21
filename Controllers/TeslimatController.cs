@@ -53,6 +53,7 @@ namespace RentCar.Controllers
             {
                 IdSozlesme = model.IdSozlesme,
                 TeslimatTarihi = DateOnly.FromDateTime(DateTime.Now),
+                GeriDonusTarihi = sozlesme.DonusTarihi,
                 Durum = "Teslim edildi"
             };
             _context.Teslimats.Add(teslimat);

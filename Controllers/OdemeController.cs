@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RentCar.Models;
 using RentCar.Utility;
 
@@ -36,12 +37,26 @@ namespace RentCar.Controllers
                 OdemeDurumu = "Tamamlandi"
             };
 
-            _context.Odemes.Add(odeme);
-            _context.SaveChanges();
+            try
+            {
+                _context.Odemes.Add(odeme);
+                _context.SaveChanges();
 
-
-            TempData["SuccessMessage"] = "Ödeme başarıyla kaydedildi.";
-            return RedirectToAction("Details", "Fatura", new { id = faturaId });
+                TempData["Success"] = "Ödeme başarıyla kaydedildi.";
+                return RedirectToAction("Details", "Fatura", new { id = faturaId });
+            }
+            catch (DbUpdateException ex) when (ex.InnerException != null && ex.InnerException.Message.Contains("Payment amount must match the total invoice amount"))
+            {
+                // Handle specific Postgres exception
+                TempData["Error"] = "Ödeme tutarı fatura tutarıyla eşleşmelidir.";
+                return RedirectToAction("Details", "Fatura", new { id = faturaId });
+            }
+            catch (Exception)
+            {
+                // Handle other exceptions
+                TempData["ErrorMessage"] = "Bir hata oluştu. Lütfen tekrar deneyin.";
+                return RedirectToAction("Details", "Fatura", new { id = faturaId });
+            }
         }
     }
 }

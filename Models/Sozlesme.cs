@@ -7,8 +7,6 @@ public partial class Sozlesme
 {
     public int IdSozlesme { get; set; }
 
-    public int? Sure { get; set; }
-
     public string? IdMusteri { get; set; }
 
     public int? IdAraba { get; set; }

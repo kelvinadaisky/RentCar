@@ -12,7 +12,13 @@
         </div>
     </div>
 
-
+    <!-- Search Form -->
+    <form method="get" action="@Url.Action("Index", "Arac")" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="searchString" class="form-control" placeholder="Search by brand or model" aria-label="Search" />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
 
     <table class="table table-striped table-hover">
         <thead class="table-dark">

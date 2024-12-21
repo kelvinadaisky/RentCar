@@ -14,10 +14,14 @@ namespace RentCar.Controllers
             _context = context;
         }
         // GET: Arac
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var aracList = _context.Aracs.ToList();
-            return View(aracList);
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                aracList = aracList.Where(a => a.Marka.Contains(searchString) || a.Model.Contains(searchString) || a.PlakaNumarasi.Contains(searchString)).ToList();
+            }
+                return View(aracList);
         }
 
         // GET: Arac/Create
