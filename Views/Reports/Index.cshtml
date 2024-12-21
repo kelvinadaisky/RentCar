@@ -1,0 +1,103 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Reports Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            font-size: 1.1rem;
+        }
+
+        .bg-secondary {
+            background-color: #6c757d !important;
+        }
+
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        .bg-dark {
+            background-color: #343a40 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-center mb-0">@ViewData["Title"]</h2>
+
+            <div>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-secondary text-white">Revenue by Car</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @foreach (var revenue in ViewBag.RevenueByCar)
+                            {
+                                <li class="list-group-item">
+                                    @revenue.CarModel: <strong>@revenue.TotalRevenue.ToString("C")</strong>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-danger text-white">Top Customers</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @foreach (var customer in ViewBag.TopCustomers)
+                            {
+                                <li class="list-group-item">
+                                    @customer.CustomerName: <strong>@customer.TotalRevenue.ToString("C")</strong>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-dark text-white">Monthly Revenue by Agency</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @foreach (var agencyRevenue in ViewBag.MonthlyRevenueByAgence)
+                            {
+                                <li class="list-group-item">
+                                    @agencyRevenue.AgencyName: <strong>@agencyRevenue.MonthlyRevenue.ToString("C")</strong>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
