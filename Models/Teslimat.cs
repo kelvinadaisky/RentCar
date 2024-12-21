@@ -13,9 +13,9 @@ public partial class Teslimat
 
     public string? Durum { get; set; }
 
-    public int? IdSozlesme { get; set; }
+    public int IdSozlesme { get; set; }
 
-    public virtual ICollection<HasarDurumu> HasarDurumus { get; } = new List<HasarDurumu>();
+    public virtual HasarDurumu? HasarDurumu { get; set; }
 
-    public virtual Sozlesme? IdSozlesmeNavigation { get; set; }
+    public virtual Sozlesme IdSozlesmeNavigation { get; set; } = null!;
 }

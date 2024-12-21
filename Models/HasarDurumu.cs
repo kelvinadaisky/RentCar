@@ -9,7 +9,7 @@ public partial class HasarDurumu
 
     public string? Durumu { get; set; }
 
-    public int? IdTeslimat { get; set; }
+    public int IdTeslimat { get; set; }
 
-    public virtual Teslimat? IdTeslimatNavigation { get; set; }
+    public virtual Teslimat IdTeslimatNavigation { get; set; } = null!;
 }

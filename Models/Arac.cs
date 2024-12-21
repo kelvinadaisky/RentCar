@@ -30,6 +30,4 @@ public partial class Arac
     public virtual Sigortum? Sigortum { get; set; }
 
     public virtual ICollection<Sozlesme> Sozlesmes { get; } = new List<Sozlesme>();
-
-    public virtual ICollection<Sozlesme> IdSozlesmes { get; } = new List<Sozlesme>();
 }

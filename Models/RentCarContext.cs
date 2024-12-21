@@ -15,6 +15,17 @@ public partial class RentCarContext : DbContext
     {
     }
 
+    public DbSet<RevenueByCar> RevenuesByCar { get; set; }
+    public DbSet<TopCustomer> TopCustomers { get; set; }
+    public DbSet<MonthlyRevenueByAgency> MonthlyRevenuesByAgence { get; set; }
+    // Table-valued functions
+    public IQueryable<RevenueByCar> GetRevenueByCar() =>
+        RevenuesByCar.FromSqlRaw("SELECT * FROM GetRevenueByCar()");
+    public IQueryable<TopCustomer> GetTopCustomers(int n) =>
+    TopCustomers.FromSqlRaw("SELECT * FROM gettopcustomers({0})", n);
+    public IQueryable<MonthlyRevenueByAgency> GetMonthlyRevenueByAgence() =>
+        MonthlyRevenuesByAgence.FromSqlRaw("SELECT * FROM GetMonthlyRevenueByAjans()");
+
     public virtual DbSet<Admin> Admins { get; set; }
 
     public virtual DbSet<Ajan> Ajans { get; set; }
@@ -51,6 +62,26 @@ public partial class RentCarContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<RevenueByCar>().HasNoKey();
+        modelBuilder.Entity<TopCustomer>().HasNoKey();
+        modelBuilder.Entity<MonthlyRevenueByAgency>().HasNoKey();
+        modelBuilder.Entity<MonthlyRevenue>(entity =>
+        {
+            entity.HasNoKey(); // No primary key
+        });
+        modelBuilder.Entity<StatsView>(entity =>
+        {
+            entity.HasNoKey(); // This indicates that it does not have a primary key
+        });
+        modelBuilder.Entity<TotalCarsCount>(entity =>
+        {
+            entity.HasNoKey(); // No primary key
+        });
+        modelBuilder.Entity<TotalCustomersCount>(entity =>
+        {
+            entity.HasNoKey(); // No primary key
+        });
+
         modelBuilder.Entity<Admin>(entity =>
         {
             entity.HasKey(e => e.Tc).HasName("Admin_pkey");
@@ -170,7 +201,6 @@ public partial class RentCarContext : DbContext
 
             entity.HasOne(d => d.IdAjansNavigation).WithMany(p => p.Calisans)
                 .HasForeignKey(d => d.IdAjans)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Calisan_ID_ajans_fkey");
 
             entity.HasOne(d => d.TcNavigation).WithOne(p => p.Calisan)
@@ -209,6 +239,8 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Fatura");
 
+            entity.HasIndex(e => e.IdSozlesme, "Fatura_ID_sozlesme_key").IsUnique();
+
             entity.Property(e => e.IdFatura).HasColumnName("ID_fatura");
             entity.Property(e => e.DuzenlenmeTarihi).HasColumnName("Duzenlenme_tarihi");
             entity.Property(e => e.IdSozlesme).HasColumnName("ID_sozlesme");
@@ -217,9 +249,8 @@ public partial class RentCarContext : DbContext
                 .HasColumnName("Odenen_tutar");
             entity.Property(e => e.VadeTarihi).HasColumnName("Vade_tarihi");
 
-            entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Faturas)
-                .HasForeignKey(d => d.IdSozlesme)
-                .OnDelete(DeleteBehavior.Cascade)
+            entity.HasOne(d => d.IdSozlesmeNavigation).WithOne(p => p.Fatura)
+                .HasForeignKey<Fatura>(d => d.IdSozlesme)
                 .HasConstraintName("Fatura_ID_sozlesme_fkey");
         });
 
@@ -229,13 +260,14 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Hasar_Durumu");
 
+            entity.HasIndex(e => e.IdTeslimat, "Hasar_Durumu_ID_teslimat_key").IsUnique();
+
             entity.Property(e => e.IdHasarDurumu).HasColumnName("ID_Hasar_Durumu");
             entity.Property(e => e.Durumu).HasMaxLength(50);
             entity.Property(e => e.IdTeslimat).HasColumnName("ID_teslimat");
 
-            entity.HasOne(d => d.IdTeslimatNavigation).WithMany(p => p.HasarDurumus)
-                .HasForeignKey(d => d.IdTeslimat)
-                .OnDelete(DeleteBehavior.Cascade)
+            entity.HasOne(d => d.IdTeslimatNavigation).WithOne(p => p.HasarDurumu)
+                .HasForeignKey<HasarDurumu>(d => d.IdTeslimat)
                 .HasConstraintName("Hasar_Durumu_ID_teslimat_fkey");
         });
 
@@ -358,21 +390,6 @@ public partial class RentCarContext : DbContext
                 .HasForeignKey(d => d.IdMusteri)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("Sozlesme_ID_musteri_fkey");
-
-            entity.HasMany(d => d.IdArabas).WithMany(p => p.IdSozlesmes)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AracSozlesme",
-                    r => r.HasOne<Arac>().WithMany()
-                        .HasForeignKey("IdAraba")
-                        .HasConstraintName("Arac_Sozlesme_ID_araba_fkey"),
-                    l => l.HasOne<Sozlesme>().WithMany()
-                        .HasForeignKey("IdSozlesme")
-                        .HasConstraintName("Arac_Sozlesme_ID_sozlesme_fkey"),
-                    j =>
-                    {
-                        j.HasKey("IdSozlesme", "IdAraba").HasName("Araç_Sözleşme_pkey");
-                        j.ToTable("Arac_Sozlesme");
-                    });
         });
 
         modelBuilder.Entity<Teslimat>(entity =>
@@ -381,15 +398,16 @@ public partial class RentCarContext : DbContext
 
             entity.ToTable("Teslimat");
 
+            entity.HasIndex(e => e.IdSozlesme, "Teslimat_ID_sozlesme_key").IsUnique();
+
             entity.Property(e => e.IdTeslimat).HasColumnName("ID_teslimat");
             entity.Property(e => e.Durum).HasMaxLength(20);
             entity.Property(e => e.GeriDonusTarihi).HasColumnName("Geri_donus_tarihi");
             entity.Property(e => e.IdSozlesme).HasColumnName("ID_sozlesme");
             entity.Property(e => e.TeslimatTarihi).HasColumnName("Teslimat_tarihi");
 
-            entity.HasOne(d => d.IdSozlesmeNavigation).WithMany(p => p.Teslimats)
-                .HasForeignKey(d => d.IdSozlesme)
-                .OnDelete(DeleteBehavior.Cascade)
+            entity.HasOne(d => d.IdSozlesmeNavigation).WithOne(p => p.Teslimat)
+                .HasForeignKey<Teslimat>(d => d.IdSozlesme)
                 .HasConstraintName("Teslimat_ID_sozlesme_fkey");
         });
 

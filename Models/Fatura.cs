@@ -13,9 +13,9 @@ public partial class Fatura
 
     public DateOnly? VadeTarihi { get; set; }
 
-    public int? IdSozlesme { get; set; }
+    public int IdSozlesme { get; set; }
 
-    public virtual Sozlesme? IdSozlesmeNavigation { get; set; }
+    public virtual Sozlesme IdSozlesmeNavigation { get; set; } = null!;
 
     public virtual Odeme? Odeme { get; set; }
 }

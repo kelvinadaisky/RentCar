@@ -21,13 +21,11 @@ public partial class Sozlesme
 
     public string? Durum { get; set; }
 
-    public virtual ICollection<Fatura> Faturas { get; } = new List<Fatura>();
+    public virtual Fatura? Fatura { get; set; }
 
     public virtual Arac? IdArabaNavigation { get; set; }
 
     public virtual Musteri? IdMusteriNavigation { get; set; }
 
-    public virtual ICollection<Teslimat> Teslimats { get; } = new List<Teslimat>();
-
-    public virtual ICollection<Arac> IdArabas { get; } = new List<Arac>();
+    public virtual Teslimat? Teslimat { get; set; }
 }
