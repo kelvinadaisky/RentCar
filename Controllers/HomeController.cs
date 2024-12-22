@@ -43,7 +43,7 @@ namespace RentCar.Controllers
             ViewBag.TotalCars = carsCount;
             ViewBag.TotalCustomers = customersCount;
             ViewBag.ActiveContracts = contractsCount;
-            ViewBag.MonthlyRevenue = revenueAmount; // Placeholder for demonstration
+            ViewBag.MonthlyRevenue = revenueAmount; 
             return View();
         }
 

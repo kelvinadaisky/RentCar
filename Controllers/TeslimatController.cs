@@ -14,7 +14,6 @@ namespace RentCar.Controllers
         {
             _context = context;
         }
-        // GET: Teslimat/Details
         [HttpGet]
         public IActionResult Details(int id)
         {
@@ -22,7 +21,7 @@ namespace RentCar.Controllers
             if (sozlesme == null)
             {
                 TempData["ErrorMessage"] = "Sözleşme bulunamadı.";
-                return RedirectToAction("Index", "Home"); // Redirect to your main page
+                return RedirectToAction("Index", "Home");
             }
 
             var teslimatViewModel = new TeslimatViewModel
@@ -35,20 +34,17 @@ namespace RentCar.Controllers
             return View(teslimatViewModel);
         }
 
-        // POST: Teslimat/Save
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Save(TeslimatViewModel model)
         {
-            // Step 1: Fetch Sözleşme
             var sozlesme = _context.Sozlesmes.FirstOrDefault(s => s.IdSozlesme == model.IdSozlesme);
             if (sozlesme == null)
             {
-                TempData["ErrorMessage"] = "Sözleşme bulunamadı.";
+                TempData["error"] = "Sözleşme bulunamadı.";
                 return RedirectToAction("Index", "Home");
             }
 
-            // Step 2: Create Teslimat record
             var teslimat = new Teslimat
             {
                 IdSozlesme = model.IdSozlesme,
@@ -66,7 +62,7 @@ namespace RentCar.Controllers
             };
             _context.HasarDurumus.Add(hasarDurumu);
             _context.SaveChanges();
-            TempData["SuccessMessage"] = "Teslimat ve Hasar Durumu başarıyla kaydedildi.";
+            TempData["success"] = "Teslimat ve Hasar Durumu başarıyla kaydedildi.";
             return RedirectToAction("Index", "Home");
         }
 

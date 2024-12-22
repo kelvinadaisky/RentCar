@@ -13,7 +13,6 @@ namespace RentCar.Controllers
         {
             _context = context;
         }
-        // GET: Arac
         public IActionResult Index(string searchString)
         {
             var aracList = _context.Aracs.ToList();
@@ -24,13 +23,12 @@ namespace RentCar.Controllers
                 return View(aracList);
         }
 
-        // GET: Arac/Create
         public IActionResult Create()
         {
             ViewData["AjansList"] = _context.Ajans.Select(d => new SelectListItem
             {
-                Value = d.IdAjans.ToString(),  // Assuming IdAjans is the ID property
-                Text = d.AjansAdi               // Assuming AjansAdi is the name property
+                Value = d.IdAjans.ToString(),  
+                Text = d.AjansAdi               
             }).ToList();
 
             var arac = new Arac();
@@ -46,20 +44,21 @@ namespace RentCar.Controllers
             {
                 _context.Add(arac);
                 _context.SaveChanges();
-                // Create an associated AracDurum for the new car
                 var aracDurum = new AracDurumu
                 {
-                    IdAraba = arac.IdAraba,  // Assuming AracDurum has a foreign key IdAraba
+                    IdAraba = arac.IdAraba,  
                 };
 
                 _context.AracDurumus.Add(aracDurum);
                 _context.SaveChanges();
+                TempData["success"] = "Car created successfully";
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AjansList"] = _context.Ajans.Select(d => new SelectListItem
             {
-                Value = d.IdAjans.ToString(),  // Assuming IdAjans is the ID property
-                Text = d.AjansAdi               // Assuming AjansAdi is the name property
+                Value = d.IdAjans.ToString(),  
+                Text = d.AjansAdi              
             }).ToList();
             return View(arac);
         }
@@ -83,7 +82,7 @@ namespace RentCar.Controllers
                     _context.Update(arac);
                     _context.SaveChanges();
 
-                TempData["success"] = "Car updated successfully";
+                TempData["success"] = "Car edited successfully";
                 return RedirectToAction("Index");
             }
             ViewData["AjansList"] = new SelectList(_context.Ajans, "IdAjans", "AjansAdi", arac.IdAjans);
@@ -110,10 +109,11 @@ namespace RentCar.Controllers
 
             _context.Aracs.Remove(arac);
             _context.SaveChanges();
+            TempData["success"] = "Car deleted successfully";
+
             return RedirectToAction("Index");
         }
 
-        // GET: Arac/Details/5
         public IActionResult Details(int id)
         {
             var arac = _context.Aracs

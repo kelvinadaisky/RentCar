@@ -14,7 +14,6 @@ public partial class RentCarContext : DbContext
         : base(options)
     {
     }
-
     public DbSet<RevenueByCar> RevenuesByCar { get; set; }
     public DbSet<TopCustomer> TopCustomers { get; set; }
     public DbSet<MonthlyRevenueByAgency> MonthlyRevenuesByAgence { get; set; }

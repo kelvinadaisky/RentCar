@@ -13,7 +13,6 @@ namespace RentCar.Controllers
             _context = context;
         }
 
-        // GET: Fatura/Details
         public IActionResult Details()
         {
             var faturas = _context.Faturas

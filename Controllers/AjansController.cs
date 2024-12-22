@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RentCar.Models; // Adjust namespace based on your project structure
+using RentCar.Models;
 using System.Linq;
 
 namespace RentCar.Controllers
@@ -14,14 +14,13 @@ namespace RentCar.Controllers
             _context = context;
         }
 
-        // GET: AjansController
         public IActionResult Index()
         {
             var ajansList = _context.Ajans.ToList();
             return View(ajansList);
         }
 
-        // GET: AjansController/Details/5
+
         public IActionResult Details(int id)
         {
             var ajan = _context.Ajans
@@ -37,13 +36,12 @@ namespace RentCar.Controllers
         }
 
 
-        // GET: AjansController/Create
+ 
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AjansController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Ajan ajan)
@@ -58,7 +56,6 @@ namespace RentCar.Controllers
             return View(ajan);
         }
 
-        // GET: AjansController/Edit/5
         public IActionResult Edit(int id)
         {
             var ajan = _context.Ajans
@@ -70,7 +67,6 @@ namespace RentCar.Controllers
             return View(ajan);
         }
 
-        // POST: AjansController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Ajan ajan)
@@ -90,7 +86,6 @@ namespace RentCar.Controllers
             return View(ajan);
         }
 
-        // GET: AjansController/Delete/5
         public IActionResult Delete(int id)
         {
             var ajan = _context.Ajans
@@ -102,7 +97,6 @@ namespace RentCar.Controllers
             return View(ajan);
         }
 
-        // POST: AjansController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

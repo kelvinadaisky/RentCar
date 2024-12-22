@@ -15,9 +15,7 @@ public partial class Arac
 
     public string? Renk { get; set; }
 
-    public int? Kilometre { get; set; }
-
-    public string? PlakaNumarasi { get; set; }
+    public string PlakaNumarasi { get; set; } = null!;
 
     public int? IdAjans { get; set; }
 

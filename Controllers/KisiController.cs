@@ -15,7 +15,6 @@ namespace RentCar.Controllers
             _context = context;
         }
 
-        // GET: Kisi
         public async Task<IActionResult> Index(string roleFilter, string searchQuery)
         {
             IQueryable<Kisi> query = _context.Kisis.AsQueryable();
@@ -128,7 +127,6 @@ namespace RentCar.Controllers
 
         public IActionResult CreateCalisan(string tc)
         {
-            // Fetch the list of Ajans from the database
             var ajansList = _context.Ajans
                 .Select(a => new SelectListItem
                 {
@@ -137,10 +135,8 @@ namespace RentCar.Controllers
                 })
                 .ToList();
 
-            // Pass the list to the view via ViewBag
             ViewBag.AjansList = ajansList;
 
-            // Create a new Calisan object with the provided TC
             var calisan = new Calisan { Tc = tc };
             return View(calisan);
         }
@@ -167,7 +163,6 @@ namespace RentCar.Controllers
                 })
                 .ToList();
 
-            // Pass the list to the view via ViewBag
             ViewBag.AjansList = ajansList;
             return View(calisan);
         }
@@ -193,7 +188,6 @@ namespace RentCar.Controllers
             return View(admin);
         }
 
-        // GET: Kisi/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -217,7 +211,6 @@ namespace RentCar.Controllers
             return View(kisi);
         }
 
-        // POST: Kisi/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Tc,Ad,Soyad,Telefon,EPosta,Role")] Kisi kisi)

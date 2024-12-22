@@ -16,13 +16,13 @@
     }
     public class MonthlyRevenue
     {
-        public decimal Revenue { get; set; } // Use decimal for currency values
+        public decimal Revenue { get; set; } 
     }
     public class RevenueByCar
     {
-        public int CarId { get; set; }       // Matches the 'carid' column
-        public string CarModel { get; set; }  // Matches the 'carmodel' column
-        public decimal TotalRevenue { get; set; } // Matches the 'totalrevenue' column
+        public int CarId { get; set; }       
+        public string CarModel { get; set; } 
+        public decimal TotalRevenue { get; set; } 
     }
 
 
@@ -34,9 +34,9 @@
 
     public class MonthlyRevenueByAgency
     {
-        public int AgencyId { get; set; }          // Matches AgencyId
-        public string AgencyName { get; set; }      // Matches AgencyName
-        public decimal MonthlyRevenue { get; set; } // Matches MonthlyRevenue
+        public int AgencyId { get; set; }         
+        public string AgencyName { get; set; }      
+        public decimal MonthlyRevenue { get; set; } 
     }
 
 

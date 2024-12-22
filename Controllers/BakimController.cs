@@ -60,6 +60,7 @@ namespace RentCar.Controllers
             {
                 return BadRequest();
             }
+            ModelState.Remove("IdArabaNavigation");
 
             if (ModelState.IsValid)
             {

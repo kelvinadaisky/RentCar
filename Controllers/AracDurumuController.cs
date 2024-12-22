@@ -15,11 +15,10 @@ namespace RentCar.Controllers
             _context = context;
         }
 
-        // GET: AracDurumu/Edit/5
         public IActionResult Edit(int id)
         {
             var aracDurumu = _context.AracDurumus
-                .Include(ad => ad.IdArabaNavigation) // Include related car data
+                .Include(ad => ad.IdArabaNavigation) 
                 .FirstOrDefault(ad => ad.IdDurum == id);
 
             if (aracDurumu == null)
@@ -34,13 +33,11 @@ namespace RentCar.Controllers
                 new SelectListItem { Text = "Araç bakımda", Value = "Araç bakımda" }
             };
 
-            // Set the selected value
             ViewBag.StatusOptions = new SelectList(options, "Value", "Text", aracDurumu.Aciklama);
 
             return View(aracDurumu);
         }
 
-        // POST: AracDurumu/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, AracDurumu aracDurumu)
@@ -54,7 +51,7 @@ namespace RentCar.Controllers
             {
                 try
                 {
-                    aracDurumu.GuncellemeTarihi = DateOnly.FromDateTime(DateTime.Now); // Update timestamp
+                    aracDurumu.GuncellemeTarihi = DateOnly.FromDateTime(DateTime.Now); 
                     _context.Update(aracDurumu);
                     _context.SaveChanges();
                     TempData["success"] = "Car status updated successfully!";

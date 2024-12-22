@@ -27,7 +27,6 @@ namespace RentCar.Controllers
                 .Include(s => s.IdArabaNavigation) // Load Araba
                 .ToList();
 
-            // Get the list of contracts
             return View(sozlesmes);
         }
 
@@ -35,7 +34,6 @@ namespace RentCar.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(string idMusteri, int idAraba, DateOnly imzalanmaTarihi, int sure, string kosullar, DateOnly cikisTarihi, DateOnly donusTarihi, string kiraSekli)
         {
-            // Validation: Çıkış Tarihi should be within 3 days from today
             var today = DateOnly.FromDateTime(DateTime.Today);
             if ((cikisTarihi.DayNumber - today.DayNumber) > 3)
             {
@@ -108,7 +106,7 @@ namespace RentCar.Controllers
             _context.SaveChanges();
 
             TempData["success"] = "Contract created successfully";
-            return RedirectToAction("Index"); // Redirect to prevent form resubmission
+            return RedirectToAction("Index"); 
         }
 
     }

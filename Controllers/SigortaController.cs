@@ -14,10 +14,8 @@ namespace RentCar.Controllers
         }
 
 
-        // GET: Sigorta/Create
         public IActionResult Create(int id)
         {
-            // Fetch the Arac entity using the provided id
             var araba = _context.Aracs.FirstOrDefault(a => a.IdAraba == id);
 
             if (araba == null)
@@ -25,7 +23,6 @@ namespace RentCar.Controllers
                 return NotFound("Car not found");
             }
 
-            // Initialize Sigortum with both IdAraba and IdArabaNavigation
             var sigortum = new Sigortum
             {
                 IdAraba = id,
@@ -35,7 +32,6 @@ namespace RentCar.Controllers
         }
 
 
-        // POST: Sigorta/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Sigortum sigortum)
@@ -44,7 +40,6 @@ namespace RentCar.Controllers
             {
                 ModelState.AddModelError("IdAraba", "Invalid car ID");
             }
-            // Remove IdArabaNavigation from ModelState
             ModelState.Remove("IdArabaNavigation");
 
             if (ModelState.IsValid)
@@ -58,11 +53,10 @@ namespace RentCar.Controllers
         }
 
 
-        // GET: Sigorta/Edit/5
         public IActionResult Edit(int id)
         {
             var sigorta = _context.Sigorta
-                .Include(s => s.IdArabaNavigation) // Include related car data
+                .Include(s => s.IdArabaNavigation) 
                 .FirstOrDefault(s => s.IdSigorta == id);
 
             if (sigorta == null)
@@ -73,7 +67,6 @@ namespace RentCar.Controllers
             return View(sigorta);
         }
 
-        // POST: Sigorta/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Sigortum sigortum)
@@ -82,6 +75,7 @@ namespace RentCar.Controllers
             {
                 return BadRequest();
             }
+            ModelState.Remove("IdArabaNavigation");
 
             if (ModelState.IsValid)
             {
